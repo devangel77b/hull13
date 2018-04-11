@@ -15,6 +15,11 @@ const int RUDDER_MIN_US = RUDDER_ZERO_US-RUDDER_RANGE_US;
 const int RUDDER_MAX_US = RUDDER_ZERO_US+RUDDER_RANGE_US; 
 
 class Rudder{
+ private:
+  Thread _rudderThread;
+  mbed::PwmOut _pwm;
+  void _rudder_process(void); 
+
  public:
   float deg; 
   
@@ -23,10 +28,7 @@ class Rudder{
 
   // later: Rudder.amidships(), Rudder.left(), Rudder.right(), etc. 
   
- private:
-  Thread _rudderThread;
-  mbed::PwmOut _pwm;
-  void _rudder_process(void); 
+
 };
 
 #endif

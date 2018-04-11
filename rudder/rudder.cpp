@@ -20,7 +20,7 @@ void Rudder::_rudder_process(void){
     
     // set rudder position
     debug("Rudder %d us",w); 
-    Rudder::_pwm::pulsewidth_us(w);
+    Rudder::_pwm.pulsewidth_us(w);
     
     Thread::wait(RUDDER_UPDATE_PERIOD_MS);
   }  // while(1)
@@ -33,11 +33,11 @@ void Rudder::_rudder_process(void){
 Rudder::Rudder(PinName pin):_pwm(pin){
   debug("Rudder constructor called.\n");
   Rudder::deg = 0.0;
-  Rudder::_pwm::period_ms(RUDDER_PERIOD_MS); // 20 ms, 50 Hz
-  Rudder::_pwm::pulsewidth_us(RUDDER_ZERO_US); // rudder amidships
+  Rudder::_pwm.period_ms(RUDDER_PERIOD_MS); // 20 ms, 50 Hz
+  Rudder::_pwm.pulsewidth_us(RUDDER_ZERO_US); // rudder amidships
 
   // attach rudder_process to rudderThread and start it
-  Rudder::_rudderThread::start(callback(this,&Rudder::_rudder_process));
+  Rudder::_rudderThread.start(callback(this,&Rudder::_rudder_process));
 }
 
 Rudder::~Rudder(void){
