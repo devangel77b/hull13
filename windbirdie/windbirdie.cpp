@@ -23,7 +23,7 @@ void WindBirdie::_read_process(void){
   while(1){
     // Take reading and apply calibration
     WindBirdie::raw = WindBirdie::_WBIn.read();
-    WindBirdie::deg = WIND_BIRDIE_CAL_M*WindBirdie::ra + WIND_BIRDIE_CAL_B;
+    WindBirdie::deg = WINDBIRDIE_CAL_M*WindBirdie::raw + WINDBIRDIE_CAL_B;
 
     // Thread-safe wait to relinquish to other processes. 
     Thread::wait(WINDBIRDIE_UPDATE_PERIOD);
