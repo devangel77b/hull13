@@ -11,10 +11,16 @@
 
 
 /**
-   This function sets the rudder position in degrees. If a position outside of the allowable range is passed, it clips it to be within the allowable range. 
+   This function sets the rudder position in degrees. If a position outside 
+   of the allowable range is passed, it clips it to be within the allowable 
+   range. 
+     
    @param deg The angle in degrees
    @returns nothing
-   In future hulls, this may be a process running inside a microcontroller embedded in the rudder actuator, acting on messages via NMEA 2000 or from ROS twist type commands from a higher level processor. 
+   
+   In future hulls, this may be a process running inside a microcontroller 
+   embedded in the rudder actuator, acting on messages via NMEA 2000 or from 
+   ROS twist type commands from a higher level processor. 
 */
 void Rudder::write(float deg){
 
@@ -65,7 +71,7 @@ Rudder::Rudder(PinName pin):_pwm(pin){
 
 
 /**
- * Destructor for a Rudder object
+   Destructor for a Rudder object
  */
 Rudder::~Rudder(void){
   debug("Rudder destructor called.\n");

@@ -21,23 +21,23 @@
 
 /**
    This defines a class and API for talking to the mainsail servo. Example:
-@code
-#include "mbed.h"
-#include "rtos.h"
-#include "mainsail.h"
+   @code
+   #include "mbed.h"
+   #include "rtos.h"
+   #include "mainsail.h"
+   
+   Mainsail mainsail(p22);
 
-Mainsail mainsail(p22);
-
-int main(){
-  mainsail.write(0.0);
-  Thread::wait(10);
-  mainsail.write(30.0);
-  Thread::wait(10);
-  mainsail.write(0.0);
-  Thread::wait(10); 
-}
-@endcode
- */
+   int main(){
+     mainsail.write(0.0);
+     Thread::wait(10);
+     mainsail.write(30.0);
+     Thread::wait(10);
+     mainsail.write(0.0);
+     Thread::wait(10); 
+   }
+   @endcode
+*/
 class Mainsail{
  private:
   mbed::PwmOut _pwm; // PWM pin connected to mainsail servo
@@ -50,7 +50,7 @@ class Mainsail{
   void write(float deg); // sets the mainsail angle in degrees
   float read(void); // gets the mainsail angle in degrees
 
-  // TODO Mainsail.beamreach(), Mainsail.closehaulport(), Mainsail.closehaulstbd(), etc. 
+  // TODO Mainsail.beamreach(), Mainsail.closehaulport(), Mainsail.closehaulstbd(), Mainsail.run(), etc. 
   
 
 }; // class Mainsail

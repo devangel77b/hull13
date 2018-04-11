@@ -11,10 +11,16 @@
 
 
 /**
-   This function sets the mainsail position in degrees. If a position outside of the allowable range is passed, it clips it to be within the allowable range. 
+   This function sets the mainsail position in degrees. If a position 
+   outside of the allowable range is passed, it clips it to be within the 
+   allowable range.
+ 
    @param deg The angle in degrees
    @returns nothing
-   In future hulls this will be a process on a microcontroller embedded in the sail actuator; and may be the recipient of commands via NMEA 2000 bus and/or a ROS twist type message. 
+
+   In future hulls this will be a process on a microcontroller embedded 
+   in the sail actuator; and may be the recipient of commands via NMEA 2000 
+   bus and/or a ROS twist type message. 
 */
 void Mainsail::write(float deg){
 
@@ -39,7 +45,7 @@ void Mainsail::write(float deg){
 /**
    This function gets the mainsail position in degrees. 
    @returns position in degrees as a float. 
- */
+*/
 float Mainsail::read(void){
   return Mainsail::_deg;
 }
@@ -65,8 +71,8 @@ Mainsail::Mainsail(PinName pin):_pwm(pin){
 
 
 /**
- * Destructor for a Mainsail object
- */
+   Destructor for a Mainsail object
+*/
 Mainsail::~Mainsail(void){
   debug("Mainsail destructor called.\n");
 } // ~Mainsail destructor
