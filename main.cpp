@@ -5,9 +5,10 @@ USNA Department of Weapons & Systems Engineering
 
 #include "mbed.h"
 #include "rtos.h"
+#include "rudder.h"
 
 // declarations
-// rudder, Hitec HS5646WP
+Rudder rudder(PA_1); // rudder, Hitec HS5646WP
 // mainsail, Hitec D845WP
 // imu/compass, Sparkfun 9dof
 // wind birdie, Honeywell RTY360LVNAX
