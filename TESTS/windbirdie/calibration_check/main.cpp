@@ -31,6 +31,7 @@ int main(void){
     while ((c != 'y') && (c != 'n')){
       pc.printf("%5.1f\r",windBirdie.deg);
       c = pc.getc();
+      Thread::wait(100); 
     }
     TEST_ASSERT_TRUE_MESSAGE((c != 'n'),"WindBirdie calibration check failed.\n\r");
   } // for loop
