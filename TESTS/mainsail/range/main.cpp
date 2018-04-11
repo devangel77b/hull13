@@ -9,8 +9,8 @@
 #include "mainsail.h"
 #include "unity.h"
 
-Serial pc(USBTX, USBRX); 
-Rudder mainsail(PA_2);
+Serial pc(USBTX, USBRX);
+Mainsail mainsail(PA_2);
 char c;
 
 
@@ -32,12 +32,12 @@ int main(){
   pc.scanf("%c",&c);
   TEST_ASSERT_TRUE_MESSAGE((c != 'n'),"Mainsail range test failed.\n\r");
   
-  rudder.write(-90.0);
+  mainsail.write(-90.0);
   pc.printf("Close hauled on starboard tack -90 deg (y/n)?\n\r");
   pc.scanf("%c",&c);
   TEST_ASSERT_TRUE_MESSAGE((c != 'n'),"Mainsail range test failed.\n\r");
   
-  rudder.write(0.0);
+  mainsail.write(0.0);
   pc.printf("Returned to beam reach (y/n)?\n\r");
   pc.scanf("%c",&c);
   TEST_ASSERT_TRUE_MESSAGE((c != 'n'),"Mainsail range test failed.\n\r");
