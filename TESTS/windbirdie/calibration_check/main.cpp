@@ -26,7 +26,7 @@ int main(void){
   pc.printf("Record indicated positions to see that it is good\n\r");
 
   for (i=0; i<360.0; i+=10.0){
-    pc.printf("\n\rReading sat at %5.3f deg? (y/n)\n\r",i);
+    pc.printf("\n\rReading sat at %6.3f deg? (y/n)\n\r",i);
     c = ' ';
     while ((c != 'y') && (c != 'n')){
       pc.printf("%5.1f\r",windBirdie.deg);
