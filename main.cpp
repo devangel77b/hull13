@@ -22,7 +22,17 @@ WindBirdie windBirdie(A0); // wind birdie, Honeywell RTY360LVNAX
 // telemetry, ?? (Xbee module)
 
 // navigational processes
+// wind estimator
+// ship state observer
+// waypoint planner
+// minor loop stuff to get to track
+// in irons detection
 
+// low level navigation primitives
+// steer steady course and trim as needed
+// steer full and by
+// tack
+// gybe
 
 
 
