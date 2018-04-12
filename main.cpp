@@ -8,6 +8,7 @@
 #include "rudder.h"
 #include "mainsail.h"
 #include "windbirdie.h"
+#include "imu.h"
 
 // actuators
 Rudder rudder(PA_1);       // rudder, Hitec HS5646WP
