@@ -12,14 +12,28 @@
 Serial pc(USBTX, USBRX); 
 Mainsail mainsail(PC_6);
 char c;
+Thread fishtail_Thread;
 
+void fishtail_callback(){
+  while(1){
+    mainsail = 1.0;
+    Thread::wait(1000);
+    mainsail = 0.0;
+    Thread::wait(1000);
+    mainsaial = -1.0;
+    Thread::wait(1000);
+    mainsail = 0.0;
+    Thread::wait(1000);
+  }
+}
 
 
 int main(){
 
   pc.printf("Mainsail fishtail movement test\n\r");
-
-  // LATER
+  pc.printf("Move mainsail side to side for test\n\r");
+  
+  fishtail_Thread.start(callback(fishtail_callback));
   
   pc.printf("Was it successful (y/n)?\n\r");
   pc.scanf("%c",&c);
