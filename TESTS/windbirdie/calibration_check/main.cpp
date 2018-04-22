@@ -10,7 +10,7 @@
 #include "unity.h"
 
 Serial pc(USBTX, USBRX); 
-WindBirdie windBirdie(A0);
+WindBirdie windBirdie(PC_4);
 char c;
 float i; 
 

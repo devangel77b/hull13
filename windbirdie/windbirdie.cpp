@@ -38,10 +38,12 @@ void WindBirdie::_read_process(void){
 
 /**
    WindBirdie(pin) is the constructor. Use this to declare a WindBirdie
-   connected to a particular pin, e.g. WindBirdie windBirdie(p19).
+   connected to a particular pin, e.g. WindBirdie windBirdie(PC_4).
    
    @param pin the AnalogIn pin the windbirdie is connected to
    @returns a WindBirdie object
+
+   The AnalogIn pin should be PC_4 in Hull 13 mod 2 rev D.
  */
 WindBirdie::WindBirdie(PinName pin):_WBIn(pin){
   debug("WindBirdie constructor called.\n"); // for debugging.

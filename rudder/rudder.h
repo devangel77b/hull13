@@ -40,7 +40,7 @@ int main(){
  */
 class Rudder{
  private:
-  mbed::PwmOut _pwm; // PWM pin connected to rudder servo
+  mbed::PwmOut _pwm; // PWM pin connected to rudder servo PC_8 for rev D board
   float _deg; // rudder angle in degrees (positive is right?)
   int _us; // servo pulse width in us
 

@@ -57,6 +57,7 @@ float Rudder::read(void){
     Constructor for a Rudder object
     @param pin The PWM pin the rudder servo PWM line is connected to
     @returns a Rudder object
+    PC_8 is the PWM pin for the rudder in Hull 13 mod 2 D board. 
 */
 Rudder::Rudder(PinName pin):_pwm(pin){
   debug("Rudder constructor called.\n");

@@ -40,7 +40,7 @@
 */
 class Mainsail{
  private:
-  mbed::PwmOut _pwm; // PWM pin connected to mainsail servo
+  mbed::PwmOut _pwm; // PWM pin connected to mainsail servo, PC_6 in rev D
   float _deg; // mainsail angle in degrees (positive is ??)
   int _us; // servo pulse width in us
 

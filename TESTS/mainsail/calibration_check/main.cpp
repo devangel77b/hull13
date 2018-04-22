@@ -10,7 +10,7 @@
 #include "unity.h"
 
 Serial pc(USBTX, USBRX); 
-Mainsail mainsail(PA_1);
+Mainsail mainsail(PC_6);
 char c;
 float i; 
 

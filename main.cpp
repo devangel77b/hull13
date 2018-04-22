@@ -12,16 +12,17 @@
 #include "compass.h"
 
 // actuators
-Rudder rudder(PA_1);       // rudder, Hitec HS5646WP
-Mainsail mainsail(PA_2);   // mainsail, Hitec D845WP
+Rudder rudder(PC_8);       // rudder, Hitec HS5646WP
+Mainsail mainsail(PC_6);   // mainsail, Hitec D845WP
 
 // sensors
-WindBirdie windBirdie(A0); // wind birdie, Honeywell RTY360LVNAX
-// imu/compass, Sparkfun 9dof
-// gps, Sparkfun Copernicus II
+WindBirdie windBirdie(PC_4); // wind birdie, Honeywell RTY360LVNAX
+// imu/compass, Sparkfun 9dof (SDA PB_9, SCL PB_8) 
+// gps, Sparkfun Copernicus II (PC_2, PC_3)
 
 // comms
-// telemetry, ?? (Xbee module)
+// OpenLogger (PC_10, PC_11)
+// telemetry, ?? (Xbee module, PC_12, PD_2)
 
 // navigational processes
 // wind estimator

@@ -10,7 +10,7 @@
 #include "unity.h"
 
 Serial pc(USBTX, USBRX); 
-Rudder rudder();
+Rudder rudder(PC_8);
 char c;
 
 

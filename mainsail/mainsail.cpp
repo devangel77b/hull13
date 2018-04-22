@@ -57,6 +57,8 @@ float Mainsail::read(void){
     Constructor for a Mainsail object
     @param pin The PWM pin the mainsail servo PWM line is connected to
     @returns a Mainsail object
+
+    PC_6 is the PWM pin for the mainsail in Hull 13 mod 2 rev D. 
 */
 Mainsail::Mainsail(PinName pin):_pwm(pin){
   debug("Mainsail constructor called.\n");

@@ -35,7 +35,7 @@
    #include "mbed.h"
    #include "rtos.h"
 
-   WindBirdie windBirdie(p19); 
+   WindBirdie windBirdie(PC_4); 
 
    int main(){
      while(1){
@@ -69,6 +69,7 @@ class WindBirdie{
   
   // function prototype for the constructor (very special).
   // the constructor creates a new WindBirdie object...
+  // The PWM pin is PC_4 in Hull 13 mod 2 rev D.
   WindBirdie(PinName pin);
 
   // function prototype for the destructor (also special).
