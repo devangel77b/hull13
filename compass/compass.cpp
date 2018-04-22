@@ -1,8 +1,12 @@
+#include "mbed.h"
+#include "rtos.h"
+#include "compass.h"
+
 void Compass::_update_process(void){
   while(1){
     // if there's serial data read and parse it to update heading
     // non blocking wait otherwise
-    thread::wait(COMPASS_UPDATE_PERIOD_MS);
+    Thread::wait(COMPASS_UPDATE_PERIOD_MS);
   } // while(1)
 } // Imu::_update_process()
 

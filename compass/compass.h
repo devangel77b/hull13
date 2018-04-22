@@ -15,7 +15,7 @@ class Compass{
 
  public:
   float hdg; 
-  Compass(PinName pin);
+  Compass(PinName tx, rx);
   ~Compass(void);
 };
 
