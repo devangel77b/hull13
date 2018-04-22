@@ -1,16 +1,22 @@
 # hull13
 ### D Evangelista
 
-This is the mbed / nucleo code for USNA Sailbot Hull 13 mod 2, part of the USNA Sailbot Program. It is being developed for ES401/404 (Systems Engineering Capstone). 
+This is the mbed / nucleo code for USNA Sailbot Hull 13 mod 2, part of the USNA Sailbot Program. It is being developed for ES401/404 (Systems Engineering Capstone). The current version of the code is intended to run on a Nucleo F091RC. 
 
 
 ## Rudder
 The rudder consists of a balanced design NACA foil. The rudder stock passes through a tube penetrating the whole hull. On the topside, there is a 1:1 linkage to a Hitec HS5646WP servo installed in a slot cut into the deck. The gap between the servo and hull is sealed with RTV and forms part of the watertight boundary (sic). 
 
-The rudder code here defines a `Rudder` class. The default class constructor is called by specifying the pin to which the rudder PWM line is connected.  There are two methods of interest, `void Rudder.write(float deg)` and `float Rudder.read()`.
+The rudder code here defines a `Rudder` class. The default class constructor is called by specifying the pin to which the rudder PWM line is connected.  There are two methods of interest, `void Rudder.write(float deg)` and `float Rudder.read()`. For Hull 13 mod 2, rev D, the rudder is connected to pin PC_8. 
 
 ## Main sail
-The main sail is a Miller-Williamson type wing sail. It is actuated by a Hitec D845WP servo via a 1:1 linkage. The servo is installed in a slot cut into the deck in a manner similar to the rudder servo. The main sail code here works similarly to the rudder code. 
+The main sail is a Miller-Williamson type wing sail. It is actuated by a Hitec D845WP servo via a 1:1 linkage. The servo is installed in a slot cut into the deck in a manner similar to the rudder servo. The main sail code here works similarly to the rudder code.  For Hull 13 mod 2, rev D, the main sail is connected to pin PC_6.
+
+## Wind birdie
+A Honeywell RTY360LVNAX/EAX is used to provide relative bearing to the wind. The software API for this sensor includes an AnalogIn for reading on pin PC_4 (Hull 13 mod 2 rev D board). 
+
+## Compass and GPS
+Under construction.
 
 ## Running tests
 The `TESTS` directory contains test cases for unit testing, acceptance and dockside testing, integrated system tests, etc. To run these tests, rename or move the `main.cpp` file temporarily. Then continue as follows. 
