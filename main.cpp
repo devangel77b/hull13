@@ -6,18 +6,17 @@
 #include "mbed.h"
 #include "rtos.h"
 
-#include "hull13.h"
 #include "rudder.h"
 #include "mainsail.h"
 #include "windbirdie.h"
 #include "compass.h"
 
 // actuators
-Rudder rudder(RUDDER_PWM);       // rudder, Hitec HS5646WP
-Mainsail mainsail(MAINSAIL_PWM);   // mainsail, Hitec D845WP
+Rudder rudder(PC_8);       // rudder, Hitec HS5646WP
+Mainsail mainsail(PC_6);   // mainsail, Hitec D845WP
 
 // sensors
-WindBirdie windBirdie(WINDBIRDIE_AIN); // wind birdie, Honeywell RTY360LVNAX
+WindBirdie windBirdie(PC_4); // wind birdie, Honeywell RTY360LVNAX
 // imu/compass, Sparkfun 9dof (SDA PB_9, SCL PB_8) 
 // gps, Sparkfun Copernicus II (PC_2, PC_3)
 

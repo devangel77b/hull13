@@ -6,12 +6,11 @@
 
 #include "mbed.h"
 #include "rtos.h"
-#include "hull13.h"
 #include "windbirdie.h"
 #include "unity.h"
 
 Serial pc(USBTX, USBRX); 
-WindBirdie windBirdie(WINDBIRDIE_AIN);
+WindBirdie windBirdie(PC_4);
 char c;
 float i;
 int j; 
