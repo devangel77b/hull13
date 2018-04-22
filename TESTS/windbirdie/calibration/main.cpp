@@ -6,6 +6,7 @@
 
 #include "mbed.h"
 #include "rtos.h"
+#include "stdio.h"
 #include "windbirdie.h"
 #include "unity.h"
 

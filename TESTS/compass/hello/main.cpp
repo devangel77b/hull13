@@ -6,6 +6,7 @@
 
 #include "mbed.h"
 #include "rtos.h"
+#include "stdio.h"
 #include "compass.h"
 #include "unity.h"
 
@@ -16,7 +17,9 @@ float hdg;
 
 int main(void){
 
-  pc.printf("Compass hello world test\n\r");
+  pc.printf("Compass version ");
+  pc.printf(COMPASS_VERSION);
+  pc.printf("\n\rCompass hello world test\n\r");
   pc.printf("Rotate the hull and see if it works\n\r");
 
   for (i=0.0; i<360.0; i=i+10.0){
