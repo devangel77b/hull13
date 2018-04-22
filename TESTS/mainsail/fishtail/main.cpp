@@ -16,13 +16,13 @@ Thread fishtail_Thread;
 
 void fishtail_callback(){
   while(1){
-    mainsail = 1.0;
+    mainsail.write(90.0);
     Thread::wait(1000);
-    mainsail = 0.0;
+    mainsail.write(0.0);
     Thread::wait(1000);
-    mainsaial = -1.0;
+    mainsail.write(-90.0);
     Thread::wait(1000);
-    mainsail = 0.0;
+    mainsail.write(0.0);
     Thread::wait(1000);
   }
 }

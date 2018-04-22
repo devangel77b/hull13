@@ -26,7 +26,7 @@
    #include "rtos.h"
    #include "mainsail.h"
    
-   Mainsail mainsail(p22);
+   Mainsail mainsail(PC_6));
 
    int main(){
      mainsail.write(0.0);
