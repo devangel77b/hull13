@@ -6,11 +6,12 @@
 
 #include "mbed.h"
 #include "rtos.h"
+#include "hull13.h"
 #include "mainsail.h"
 #include "unity.h"
 
 Serial pc(USBTX, USBRX); 
-Mainsail mainsail(PC_6);
+Mainsail mainsail(MAINSAIL_PWM);
 char c;
 float i; 
 

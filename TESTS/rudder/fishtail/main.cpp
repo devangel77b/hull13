@@ -6,11 +6,12 @@
 
 #include "mbed.h"
 #include "rtos.h"
+#include "hull13.h"
 #include "rudder.h"
 #include "unity.h"
 
 Serial pc(USBTX, USBRX); 
-Rudder rudder(PC_8);
+Rudder rudder(RUDDER_PWM);
 char c;
 Thread fishtail_Thread;
 
