@@ -12,14 +12,27 @@
 Serial pc(USBTX, USBRX); 
 Rudder rudder(PC_8);
 char c;
+Thread fishtail_Thread;
 
-
+void fishtail_callback(void){
+  while(1){
+    rudder = 1.0; // right full rudder
+    Thread::wait(1000);
+    rudder = 0.0; // amidships
+    Thread::wait(1000);
+    rudder = -1.0; // left full rudder
+    Thread::wait(1000);
+    rudder = 0.0; // amidships
+    Thread::wait(1000);
+  }
+}
 
 int main(){
 
   pc.printf("Rudder fishtail movement test\n\r");
+  pc.printf("Practice doing jam recovery maneuver\n\r");
 
-  // LATER
+  fishtail_Thread.start(callback(fishtail_callback));
   
   pc.printf("Was it successful (y/n)?\n\r");
   pc.scanf("%c",&c);
