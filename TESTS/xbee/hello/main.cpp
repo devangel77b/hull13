@@ -10,7 +10,7 @@
 #include "xbee.h"
 #include "unity.h"
 
-#define XBEEBAUD 9600
+#define XBEEBAUD 57600
 
 Serial pc(USBTX,USBRX);
 XBee telem(PC_12,PD_2,XBEEBAUD);
@@ -43,7 +43,7 @@ int main(void){
   telem.printf("You said %d\n",i);
   telem.printf("What is 19.0 + 0.98?\n");
   telem.scanf("%f",&f);
-  TEST_ASSERT_EQUAL_MESSAGE(19.98,f,"XBee hello failed, not receiving or you suck at float math\n\r");
+  TEST_ASSERT_EQUAL_FLOAT_MESSAGE(19.98,f,"XBee hello failed, not receiving or you suck at float math\n\r");
   telem.printf("You said %f\n",f);
   
   pc.printf("Overall, mMssages transmitted and received correctly (y/n)? ");
