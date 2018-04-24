@@ -11,7 +11,7 @@
 #include "unity.h"
 
 Serial pc(USBTX,USBRX);
-Serial dummygps(PC_2, PC_3,4800); 
+Serial dummygps(PC_2,PC_3,4800); 
 char rawstring[83]; 
 char c;
 
@@ -23,8 +23,8 @@ int main(void){
   pc.printf("Just see if we can get GPS sentences back, no parsing.\n\r");
   pc.printf("Be sure antenna is installed\n\r");
 
-  dummygps.baud(4800);
-  dummygps.format(8,SerialBase::None,1); 
+  //dummygps.baud(4800);
+  //dummygps.format(8,SerialBase::None,1); 
 
   while(1){
     if (dummygps.readable()){

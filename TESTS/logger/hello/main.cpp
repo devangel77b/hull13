@@ -25,7 +25,7 @@ int main(void){
   logger.printf("\nGo Navy, Beat Army\n");
   logger.printf("The following is a test of the logging system:\n");
   logger.printf("%d,%d,%d... ",1,2,3);
-  logger.printf("%f,%f,%f.\n",3,2,1);
+  logger.printf("%f,%f,%f.\n",3.0,2.0,1.0);
   logger.printf("Test sat.");
 
   pc.printf("Open the log files and verify they were created correctly.\n\r");
