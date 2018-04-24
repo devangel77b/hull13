@@ -98,5 +98,16 @@ Track::~Track(void){
   debug("~Track() destructor called.\n");
 }
 
+/**
+   @param(other) is the other point
+   see [http://www.movable-type.co.uk/scripts/latlong.html]
+ */
+float Track::crosstrack_distance(Position * other){
+  float delta13, theta13, theta12;
 
-
+  delta13 = Track::startpoint->distance_to(other)/REARTH;
+  theta13 = Track::startpoint->bearing_to(other)/RAD2DEG;
+  theta12 = Track::startpoint->bearing_to(Track::endpoint)/RAD2DEG;
+  
+  return asin(sin(delta13)*sin(theta13-theta12))*REARTH;
+}

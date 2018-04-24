@@ -30,21 +30,21 @@ int main(void){
   telem.printf("\nGo Navy, Beat Army\n");
   telem.printf("The following is a test of the telemetry system:\n");
   telem.printf("%d,%d,%d... ",1,2,3);
-  telem.printf("%f,%f,%f.\n",3,2,1);
-  telem.printf("Test sat.");
+  telem.printf("%f,%f,%f.\n",3.0,2.0,1.0);
+  telem.printf("Test sat.\n");
 
   pc.printf("Messages received correctly (y/n)? ");
   pc.scanf("%c",&c);
   TEST_ASSERT_TRUE_MESSAGE((c == 'y'),"XBee hello failed, not transmitting\n\r");
 
   telem.printf("What is 2+2?\n");
-  telem.scanf("%d",i);
-  TEST_ASSERT_EQUAL_MESSAGE(i,4,"XBee hello failed, not receiving or you suck at math\n\r");
-  telem.printf("You said %d",i);
+  telem.scanf("%d",&i);
+  TEST_ASSERT_EQUAL_MESSAGE(4,i,"XBee hello failed, not receiving or you suck at math\n\r");
+  telem.printf("You said %d\n",i);
   telem.printf("What is 19.0 + 0.98?\n");
-  telem.scanf("%f",f);
-  TEST_ASSERT_EQUAL_MESSAGE(f,19.98,"XBee hello failed, not receiving or you suck at float math\n\r");
-  telem.printf("You said %d",i);
+  telem.scanf("%f",&f);
+  TEST_ASSERT_EQUAL_MESSAGE(19.98,f,"XBee hello failed, not receiving or you suck at float math\n\r");
+  telem.printf("You said %f\n",f);
   
   pc.printf("Overall, mMssages transmitted and received correctly (y/n)? ");
   pc.scanf("%c",&c);
