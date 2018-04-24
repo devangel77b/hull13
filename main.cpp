@@ -22,7 +22,7 @@ Compass compass(PB_9, PB_8); // imu/compass, Adafruit BNO055 Absolute (SDA,SCL)
 Gps gps(PC_2, PC_3); // gps, Sparkfun Copernicus II (TX,RX)
 
 // comms
-// OpenLogger (PC_10, PC_11)
+Logger log(PC_10,PC_11); // OpenLogger (PC_10, PC_11)
 // telemetry, ?? (Xbee module, PC_12, PD_2)
 
 // navigational processes
