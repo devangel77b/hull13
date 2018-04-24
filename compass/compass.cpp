@@ -20,7 +20,7 @@ void Compass::_update_process(void){
   while(1){
     // take compass reading
     Compass::_bno055.get_angles();
-    hdg = _bno055.euler.yaw; // need to check if this is right
+    Compass::hdg = _bno055.euler.yaw; // need to check if this is right
 
     // thread-safe wait to relinquish to other processes
     Thread::wait(COMPASS_UPDATE_PERIOD_MS);
@@ -45,12 +45,14 @@ Compass::Compass(PinName sda, PinName scl):_bno055(sda, scl){
 
   // start the bno055, need to check if this is right
   Compass::_bno055.reset();
-  Thread::wait(675);  
-  Compass::_bno055.check();
-  Thread::wait(300);
-  //Compass::_bno055.SetExternalCrystal(1);
+  Thread::wait(675);
+  if (!(Compass::_bno055.check())){
+    debug("Failed to connect to BNO055!\n");
+  };
   Compass::_bno055.setmode(OPERATION_MODE_NDOF);
   Compass::_bno055.set_angle_units(DEGREES);
+  //Compass::_bno055.SetExternalCrystal(1);
+
   
   // start _update_process by attaching it to _thread
   Compass::_thread.start(callback(this, &Compass::_update_process));

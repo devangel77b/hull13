@@ -25,7 +25,7 @@ int main(void){
 
   while(1){
     pc.printf("%5.1f\r",compass.hdg);
-    Thread::wait(1);
+    Thread::wait(1000);
   }
   
   /*  for (i=0.0; i<360.0; i=i+10.0){
