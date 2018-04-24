@@ -26,7 +26,7 @@ int main(void){
   
   for (i=0; i<360.0; i+=10.0){
     pc.printf("Move to %6.3f deg and hit enter\n\r",i);
-    pc.scanf("");
+    pc.scanf("%c",c);
     for (j=0; j<10; j++){
       pc.printf("%6.3f,%f\n\r",i,windBirdie.raw);
       Thread::wait(100); 

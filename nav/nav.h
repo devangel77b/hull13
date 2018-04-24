@@ -14,24 +14,28 @@ class Position{
 public:
   float longitude; 
   float latitude;
-  char * name; 
+  char *name; 
 
   Position(void);
   Position(float longitude, float latitude);
   Position(float longitude, float latitude, char * name);
+  Position(float longitude, float latitude, const char * name); 
   ~Position(void);
   float bearing_to(Position * other);
   float distance_to(Position * other);
 };
 
-/*
+
 class Track{
 public:
-  Position startpoint;
-  Position endpoint;
-  char name[25];
+  Position *startpoint;
+  Position *endpoint;
+  char *name;
 
-  Track(Position startpoint, Position endpoint);
+  Track(void);
+  Track(Position *startpoint, Position *endpoint);
+  Track(Position *startpoint, Position *endpoint, char *name);
+  Track(Position *startpoint, Position *endpoint, const char *name); 
   ~Track(void);
   float crosstrack_distance(Position position);
 };
@@ -40,7 +44,7 @@ public:
 
 
 
-
+/*
 
 
 class GenericBehavior{
