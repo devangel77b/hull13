@@ -45,9 +45,11 @@ Compass::Compass(PinName sda, PinName scl):_bno055(sda, scl){
 
   // start the bno055, need to check if this is right
   Compass::_bno055.reset();
-  Thread::wait(675);
+  Thread::wait(675);  
   Compass::_bno055.check();
-  Compass::_bno055.setmode(OPERATION_MODE_COMPASS);
+  Thread::wait(300);
+  //Compass::_bno055.SetExternalCrystal(1);
+  Compass::_bno055.setmode(OPERATION_MODE_NDOF);
   Compass::_bno055.set_angle_units(DEGREES);
   
   // start _update_process by attaching it to _thread

@@ -28,13 +28,13 @@ int main(){
   pc.scanf("%c",&c);
   TEST_ASSERT_TRUE_MESSAGE((c != 'n'),"Mainsail range test failed.\n\r");
   
-  mainsail.write(90.0);
-  pc.printf("Close hauled on port tack 90 deg (y/n)?\n\r");
+  mainsail.write(45.0);
+  pc.printf("Close hauled on port tack 45 deg (y/n)?\n\r");
   pc.scanf("%c",&c);
   TEST_ASSERT_TRUE_MESSAGE((c != 'n'),"Mainsail range test failed.\n\r");
   
-  mainsail.write(-90.0);
-  pc.printf("Close hauled on starboard tack -90 deg (y/n)?\n\r");
+  mainsail.write(-45.0);
+  pc.printf("Close hauled on starboard tack -45 deg (y/n)?\n\r");
   pc.scanf("%c",&c);
   TEST_ASSERT_TRUE_MESSAGE((c != 'n'),"Mainsail range test failed.\n\r");
   

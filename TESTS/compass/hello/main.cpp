@@ -14,6 +14,7 @@ Serial pc(USBTX,USBRX);
 Compass compass(PB_9, PB_8);
 char c;
 float hdg;
+float i;
 
 int main(void){
 
@@ -22,7 +23,12 @@ int main(void){
   pc.printf("\n\rCompass hello world test\n\r");
   pc.printf("Rotate the hull and see if it works\n\r");
 
-  for (i=0.0; i<360.0; i=i+10.0){
+  while(1){
+    pc.printf("%5.1f\r",compass.hdg);
+    Thread::wait(1);
+  }
+  
+  /*  for (i=0.0; i<360.0; i=i+10.0){
     pc.printf("\n\rReading sat at %3.0f? (y/n)\nr\r",i);
     c = ' ';
     while((c!='y') && (c!='n')){
@@ -32,4 +38,5 @@ int main(void){
     } // while
     TEST_ASSERT_TRUE_MESSAGE((c != 'n'),"Compass hello world test failed\n\r");
   } // for loop
+  */
 } // main() for TESTS/compass/hello

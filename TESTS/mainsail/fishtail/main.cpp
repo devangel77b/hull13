@@ -17,11 +17,11 @@ Thread fishtail_Thread;
 
 void fishtail_callback(){
   while(1){
-    mainsail.write(90.0);
+    mainsail.write(45.0);
     Thread::wait(1000);
     mainsail.write(0.0);
     Thread::wait(1000);
-    mainsail.write(-90.0);
+    mainsail.write(-45.0);
     Thread::wait(1000);
     mainsail.write(0.0);
     Thread::wait(1000);

@@ -17,11 +17,11 @@ Thread fishtail_Thread;
 
 void fishtail_callback(void){
   while(1){
-    rudder.write(90.0); // right full rudder
+    rudder.write(45.0); // right full rudder
     Thread::wait(1000);
     rudder.write(0.0); // amidships
     Thread::wait(1000);
-    rudder.write(-90.0); // left full rudder
+    rudder.write(-45.0); // left full rudder
     Thread::wait(1000);
     rudder.write(0.0); // amidships
     Thread::wait(1000);

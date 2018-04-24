@@ -28,13 +28,13 @@ int main(){
   pc.scanf("%c",&c);
   TEST_ASSERT_TRUE_MESSAGE((c != 'n'),"Rudder range test failed.\n\r");
   
-  rudder.write(90.0);
-  pc.printf("Hard right 90 degrees (y/n)?\n\r");
+  rudder.write(-45.0);
+  pc.printf("Hard right -45 degrees (y/n)?\n\r");
   pc.scanf("%c",&c);
   TEST_ASSERT_TRUE_MESSAGE((c != 'n'),"Rudder range test failed.\n\r");
   
-  rudder.write(-90.0);
-  pc.printf("Hard left 90 degrees (y/n)?\n\r");
+  rudder.write(45.0);
+  pc.printf("Hard left 45 degrees (y/n)?\n\r");
   pc.scanf("%c",&c);
   TEST_ASSERT_TRUE_MESSAGE((c != 'n'),"Rudder range test failed.\n\r");
   

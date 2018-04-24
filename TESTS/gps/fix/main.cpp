@@ -12,7 +12,7 @@
 #include "unity.h"
 
 Serial pc(USBTX,USBRX);
-Gps gps(PB_2, PB_3);
+Gps gps(PC_2, PC_3);
 bool b;
 char c;
 

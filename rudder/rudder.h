@@ -15,7 +15,7 @@
 #define RUDDER_PERIOD_MS 20 // 50Hz, 20 ms
 #define RUDDER_ZERO_US 1500 // at 0 position
 #define RUDDER_RANGE_US 600 // on either side of 0 position
-#define RUDDER_RANGE_DEG 90 // 
+#define RUDDER_RANGE_DEG 45 // Paul Miller ordered 90 degree range
 
 
 

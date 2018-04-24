@@ -32,7 +32,7 @@ void Rudder::write(float deg){
   Rudder::_deg = deg;
 
   // compute correct servo timing
-  Rudder::_us = RUDDER_ZERO_US + (int)(RUDDER_RANGE_US + Rudder::_deg/RUDDER_RANGE_DEG);
+  Rudder::_us = RUDDER_ZERO_US + (int)(RUDDER_RANGE_US * Rudder::_deg/RUDDER_RANGE_DEG);
      
   // set the servo position
   debug("Rudder %d us",Rudder::_us); 

@@ -22,10 +22,10 @@ int main(){
   pc.printf("Rudder version ");
   pc.printf(RUDDER_VERSION);
   pc.printf("\n\rRudder calibration check\n\r");
-  pc.printf("Rudder should move from -90 to 90 deg in increments of 15 deg\n\r");
+  pc.printf("Rudder should move from -45 to 45 deg in increments of 5 deg\n\r");
   pc.printf("Record actual rudder positions to see that it is good\n\r");
 
-  for (i=-90.0; i<90.0; i+=15.0){
+  for (i=-45.0; i<45.0; i+=5.0){
     rudder.write(i);
     pc.printf("Rudder at %2.2f (y/n)?\n\r",i);
     pc.scanf("%c",&c);

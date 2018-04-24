@@ -37,7 +37,7 @@ public:
   Track(Position *startpoint, Position *endpoint, char *name);
   Track(Position *startpoint, Position *endpoint, const char *name); 
   ~Track(void);
-  float crosstrack_distance(Position position);
+  float crosstrack_distance(Position *position);
 };
 
 

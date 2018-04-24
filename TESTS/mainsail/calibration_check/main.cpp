@@ -22,10 +22,10 @@ int main(){
   pc.printf("Mainsail version ");
   pc.printf(MAINSAIL_VERSION);
   pc.printf("\n\rMainsail calibration check\n\r");
-  pc.printf("Mainsail should move from -90 to 90 deg in increments of 15 deg\n\r");
+  pc.printf("Mainsail should move from -45 to 45 deg in increments of 5 deg\n\r");
   pc.printf("Record actual mainsail positions to see that it is good\n\r");
 
-  for (i=-90.0; i<90.0; i+=15.0){
+  for (i=-45.0; i<45.0; i+=5.0){
     mainsail.write(i);
     pc.printf("Mainsail at %2.2f (y/n)?\n\r",i);
     pc.scanf("%c",&c);

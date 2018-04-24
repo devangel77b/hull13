@@ -15,7 +15,7 @@
 // https://os.mbed.com/users/StressedDave/code/BNO055
 
 #define COMPASS_VERSION "13.2.0"
-#define COMPASS_UPDATE_PERIOD_MS 100 // ms, default update period
+#define COMPASS_UPDATE_PERIOD_MS 1000 // ms, default update period
 
 
 /**

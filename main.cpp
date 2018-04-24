@@ -26,9 +26,9 @@ Compass compass(PB_9, PB_8); // imu/compass, Adafruit BNO055 Absolute (SDA,SCL)
 Gps gps(PC_2, PC_3); // gps, Sparkfun Copernicus II (TX,RX)
 
 // comms
-Logger logger(PC_10,PC_11); // OpenLogger (PC_10, PC_11)
+Logger logger(PC_10,PC_11,9600); // OpenLogger (PC_10, PC_11)
 //XBee telem(PC_12,PD_2); // Xbee module, (PC_12, PD_2)
-Serial telem(USBTX,USBRX); // when working with wired connection
+Serial telem(USBTX,USBRX,9600); // when working with wired connection
 
 // navigational processes
 // wind estimator

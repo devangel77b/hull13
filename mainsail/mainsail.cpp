@@ -32,7 +32,7 @@ void Mainsail::write(float deg){
   Mainsail::_deg = deg;
 
   // compute correct servo timing
-  Mainsail::_us = MAINSAIL_ZERO_US + (int)(MAINSAIL_RANGE_US + Mainsail::_deg/MAINSAIL_RANGE_DEG);
+  Mainsail::_us = MAINSAIL_ZERO_US + (int)(MAINSAIL_RANGE_US * Mainsail::_deg/MAINSAIL_RANGE_DEG);
      
   // set the servo position
   debug("Mainsail %d us",Mainsail::_us); 
