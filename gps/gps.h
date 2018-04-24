@@ -50,13 +50,14 @@ class Gps{
 
   mbed::Serial _gps; // Serial port the sensor is connected to
   Thread _thread; // a Thread for running the sensor in.
-  void _read_process(void); // the actual routine running in the Thread.
+  void _rx_callback(void); // the actual routine running in the Thread.
   TinyGPS _parser; 
 
 
 
  public:
   // The outside world is allowed to use these...
+  bool newdata; 
   
   // function prototype for the constructor (very special).
   // the constructor creates a new Gps object...

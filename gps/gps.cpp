@@ -6,29 +6,19 @@
 #include "mbed.h"
 #include "rtos.h"
 #include "gps.h"
-//#include "TinyGPS.h"
+#include "TinyGPS.h"
 
 
 
 /*
-  Callback function for the wind birdie to control its reading. 
-  _read_process() is private, should not be called from outside world
-  Thread _WBThread will have this process running, which periodically reads
-  the sensor, then does a thead-safe wait, allowing other stuff to happen.
+  Callback function for the gps, to be attached to RxIrq on the Serial 
+  connection _gps to the Copernicus II.
  */
-void Gps::_read_process(void){
-  //char raw_string[82];
-  
-  while(1){
-    // Take reading and apply calibration
-    if (Gps::_gps.readable()){
-	Gps::_parser.encode(Gps::_gps.getc()); 
-      }
+void Gps::_rx_callback(void){
+  // have to actually read to clear the interrupt 
+  Gps::newdata = Gps::_parser.encode(Gps::_gps.getc()); 
+}
     
-    // Thread-safe wait to relinquish to other processes. 
-    Thread::wait(GPS_UPDATE_PERIOD);
-  } // while(1)
-} // _read_process()
 
 
 
@@ -53,8 +43,8 @@ Gps::Gps(PinName tx, PinName rx):_gps(tx,rx){
   Gps::_gps.baud(4800); // 4800 8N1
   Gps::_gps.format(8,SerialBase::None,1); 
   
-  // the next line starts the Gps read process going in the thread.
-  Gps::_thread.start(callback(this, &Gps::_read_process));
+  // the next line attaches the rx callback to Gps rx irq
+  Gps::_gps.attach(callback(this,&Gps::_rx_callback),Serial::RxIrq);
 } // Gps(tx,rx) constructor
 
 
@@ -69,6 +59,13 @@ Gps::Gps(PinName tx, PinName rx):_gps(tx,rx){
 Gps::~Gps(){
   debug("Gps destructor called.\n");
 } // ~Gps() destructor
+
+
+
+
+
+
+
 
 void Gps::get_position(long *latitude, long *longitude, unsigned long *fix_age){
   Gps::_parser.get_position(latitude, longitude, fix_age); 
