@@ -20,7 +20,7 @@ void Compass::_update_process(void){
   while(1){
     // take compass reading
     Compass::_bno055.get_angles();
-    Compass::hdg = _bno055.euler.yaw; // need to check if this is right
+    Compass::hdg = Compass::_bno055.euler.yaw; // need to check if this is right
 
     // thread-safe wait to relinquish to other processes
     Thread::wait(COMPASS_UPDATE_PERIOD_MS);
@@ -42,6 +42,7 @@ void Compass::_update_process(void){
  */
 Compass::Compass(PinName sda, PinName scl):_bno055(sda, scl){
   debug("Compass constructor called\n");
+  Compass::hdg = -41.0;
 
   // start the bno055, need to check if this is right
   Compass::_bno055.reset();

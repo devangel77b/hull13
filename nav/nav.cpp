@@ -55,7 +55,7 @@ float Position::bearing_to(Position * other){
    @param(other) is the other point
    see [http://www.movable-type.co.uk/scripts/latlong.html]
  */
-float Position::distance_to(Position * other){
+float Position::distance_to(Position *other){
   float phi1,phi2,dphi,dlam,a,c;
 
   phi1 = Position::latitude/RAD2DEG;
@@ -110,4 +110,16 @@ float Track::crosstrack_distance(Position * other){
   theta12 = Track::startpoint->bearing_to(Track::endpoint)/RAD2DEG;
   
   return asin(sin(delta13)*sin(theta13-theta12))*REARTH;
+}
+
+/**
+   gives signed difference bearing-heading, in degrees
+   see [https://stackoverflow.com/questions/16180595/find-the-angle-between-two-bearings]
+   @param(to_brg), float bearing 0 to 360 true
+   @param(from_hdg), float heading 0 to 360 true
+   @returns float, signed -180.0 to 180.0 in degrees relative
+   negative is left
+ */
+float turn_to(float to_brg, float from_hdg){
+  return fmodf(fmodf(to_brg-from_hdg,360.0)+540.0,360.0)-180.0; 
 }

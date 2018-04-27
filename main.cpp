@@ -13,6 +13,7 @@
 #include "gps.h"
 #include "logger.h"
 #include "xbee.h"
+#include "nav.h"
 
 #define SAILBOT_VERSION "13.2.0"
 
@@ -30,21 +31,10 @@ Logger logger(PC_10,PC_11,9600); // OpenLogger (PC_10, PC_11)
 //XBee telem(PC_12,PD_2); // Xbee module, (PC_12, PD_2)
 Serial telem(USBTX,USBRX,9600); // when working with wired connection
 
-// navigational processes
-// wind estimator
-// ship state observer LATER
-// waypoint planner LATER
-// minor loop stuff to get to track LATER
-// in irons detection
-
-// low level navigation primitives
-// steer towards a waypoint
-// steer steady course and trim as needed LATER
-// steer full and by LATER
-// tack LATER
-// gybe
-
-
+// waypoints
+Position WP1(-76.47538051521539,38.98428991077217,"WP1");
+Position WP2(-76.45824247091318,38.97715200765768,"WP2");
+Position WP3(-76.47184839108753,38.97126294386471,"WP3");
 
 
 int main(void){
@@ -57,11 +47,29 @@ int main(void){
   telem.printf("  GPS v%s\n",GPS_VERSION);
   telem.printf("  Logger v%s\n",LOGGER_VERSION);
   telem.printf("  XBee v%s\n",XBEE_VERSION);
+  telem.printf("  Nav v%s\n", NAV_VERISON);
+  telem.printf("\n");
   
-  // load waypoints
-  // load estimated position
+  // verify waypoints
+  telem.printf("Waypoints:\n");
+  telem.printf("  %s,%f,%f\n",WP1.name,WP1.longitude,WP1.latitude);
+  telem.printf("  %s,%f,%f\n",WP2.name,WP2.longitude,WP2.latitude);
+  telem.printf("  %s,%f,%f\n",WP3.name,WP3.longitude,WP3.latitude);
+  telem.printf("\n");
+
   // initialize and start all navigation processes
+  // WAIT FOR FIX LATER
+
+  // turn to 1
   
-  // main loop
-  // keep navigating
+  
+  // sail to 1
+
+  // turn to 2
+  // sail to 2
+
+  // turn to 3
+  // sail to 3
+
+  // done
 } // main()

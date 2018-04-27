@@ -26,7 +26,7 @@
    #include "mbed.h"
    #include "rtos.h"
 
-   Compass compass(PC_9, PC_8);
+   Compass compass(PB_9, PB_8);
    
    int main(){
      while(1){

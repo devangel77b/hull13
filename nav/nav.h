@@ -7,7 +7,7 @@
 
 #define NAV_VERSION "13.2.0"
 #define RAD2DEG 57.2958
-#define REARTH 6371.0
+#define REARTH 6371.0e3
 
 
 class Position{
@@ -40,40 +40,6 @@ public:
   float crosstrack_distance(Position *position);
 };
 
+float turn_to(float to_brg, float from_hdg);
 
-
-
-
-/*
-
-
-class GenericBehavior{
-public:
-  GenericBehavior();
-  ~GenericBehavior();
-  void callback(void);
-  bool is_done(void);
-  GenericBehavior nextAction;
-};
-
-class HeaveTo: public GenericBehavior{
-public:
-  HeaveTo(void);
-  ~HeaveTo(void);
-};
-
-class SailToWaypoint: public GenericBehavior{
-public:
-  bool starboardTack;
-  SailToWaypoint(void);
-  ~SailToWaypoint(void);
-}
-
-class Gybe: public GenericBehavior{
-public:
-  bool turningRight;
-  Gybe(void);
-  ~Gybe(void);
-}
-*/
 #endif
