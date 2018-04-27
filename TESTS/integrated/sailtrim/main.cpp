@@ -18,7 +18,7 @@ void sailtrim_callback(void){
   float sailtrim;
 
   // HACK BECAUSE WINDBIRDIE ZERO IS POINTED TO RIGHT
-  deg = fmod(windbirdie.deg-90.0,360.0);
+  deg = fmod(windbirdie.deg+90.0,360.0);
   if (deg<180.0)
     rdeg = deg;
   else
