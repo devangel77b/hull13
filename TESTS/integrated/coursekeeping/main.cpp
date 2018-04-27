@@ -9,7 +9,7 @@
 Serial pc(USBTX,USBRX);
 
 Rudder rudder(PC_8); 
-Compass compass(PB_8, PB_9);
+Compass compass(PB_9, PB_8);
 
 float r, e, ie, u;
 float Kp=0.5;
@@ -26,7 +26,7 @@ void hdgcontrol_callback(void){
     e = turn_to(r, hdg);
     ie = ie + (float) DTus/1000.0 * e;
     u = Kp*e + Ki*ie;
-    rudder.write(u);
+    rudder.write(-u);
     pc.printf("ref=%f, err=%f, int_err=%f, u=%f\n",r,e,ie,u); 
     Thread::wait(DTus); 
   }
