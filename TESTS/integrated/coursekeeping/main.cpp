@@ -20,8 +20,10 @@ int i;
 char c;
 
 void hdgcontrol_callback(void){
+  float hdg; 
   while(1){
-    e = turn_to(r, compass.hdg);
+    hdg = compass.hdg; 
+    e = turn_to(r, hdg);
     ie = ie + (float) DTus/1000.0 * e;
     u = Kp*e + Ki*ie;
     rudder.write(u);

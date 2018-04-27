@@ -4,6 +4,7 @@
 #include "mainsail.h"
 #include "windbirdie.h"
 #include "unity.h"
+#include "math.h"
 
 Serial pc(USBTX,USBRX);
 Mainsail mainsail(PC_6);
@@ -13,9 +14,16 @@ Thread sailtrim_thread;
 char c;
 
 void sailtrim_callback(void){
-  float rdeg = windbirdie.rdeg;
+  float deg, rdeg;
   float sailtrim;
 
+  // HACK BECAUSE WINDBIRDIE ZERO IS POINTED TO RIGHT
+  deg = fmod(windbirdie.deg-90.0,360.0);
+  if (deg<180.0)
+    rdeg = deg;
+  else
+    rdeg = -(360.0-deg);
+  
   // starboard tack
   if ((0 <= rdeg) && (rdeg < 90.0)) { sailtrim = 15.0*rdeg/90.0; }
   else if ((90.0 <= rdeg) && (rdeg < 120.0)) { sailtrim = 15.0+rdeg-90.0; }

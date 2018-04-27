@@ -30,6 +30,7 @@ byte hundredths;
 unsigned long fix_age;
 unsigned long gdate;
 unsigned long gtime; 
+float hdg; 
 
 int main(){
   pc.printf("Sailbot 13.2.0\n\r");
@@ -49,9 +50,10 @@ int main(){
     logger.printf("wind birdie: %f %f %f\n",windBirdie.raw,windBirdie.deg,windBirdie.rdeg);
     telem.printf("wind birdie: %f %f %f\n",windBirdie.raw,windBirdie.deg,windBirdie.rdeg);
 
-    pc.printf("compass: %f\n\r",compass.hdg);
-    logger.printf("compass: %f\n",compass.hdg);
-    telem.printf("compass: %f\n",compass.hdg);
+    hdg = compass.hdg; 
+    pc.printf("compass: %f\n\r",hdg);
+    logger.printf("compass: %f\n",hdg);
+    telem.printf("compass: %f\n",hdg);
     
     
     gps.get_datetime(&gdate, &gtime, &fix_age);
