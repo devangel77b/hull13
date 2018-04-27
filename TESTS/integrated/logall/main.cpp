@@ -1,6 +1,8 @@
 #include "mbed.h"
 #include "rtos.h"
 #include "stdio.h"
+#include "windbirdie.h"
+#include "compass.h"
 #include "gps.h"
 #include "logger.h"
 #include "xbee.h"
@@ -12,7 +14,7 @@ Compass compass(PB_9,PB_8);
 Gps gps(PC_2, PC_3);
 
 Logger logger(PC_10,PC_11,9600);
-Xbee telem(PC_12,PD_2,57600);
+XBee telem(PC_12,PD_2,57600);
 
 float longitude;
 float latitude;
@@ -27,7 +29,7 @@ byte second;
 byte hundredths; 
 unsigned long fix_age;
 unsigned long gdate;
-unsigned long dtime; 
+unsigned long gtime; 
 
 int main(){
   pc.printf("Sailbot 13.2.0\n\r");
@@ -52,7 +54,7 @@ int main(){
     telem.printf("compass: %f\n",compass.hdg);
     
     
-    gps.get_datetime(&gdate, &gtime &fix_age);
+    gps.get_datetime(&gdate, &gtime, &fix_age);
     pc.printf("gps: %d %d ",gdate,gtime);
     logger.printf("gps: %d %d ",gdate,gtime);
     telem.printf("gps: %d %d ",gdate,gtime);

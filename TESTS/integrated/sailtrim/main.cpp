@@ -10,6 +10,7 @@ Mainsail mainsail(PC_6);
 WindBirdie windbirdie(PC_4);
 
 Thread sailtrim_thread;
+char c;
 
 void sailtrim_callback(void){
   float rdeg = windbirdie.rdeg;
@@ -34,7 +35,7 @@ int main(){
   pc.printf("Integrated test of sail trimming\n\r");
   
   pc.printf("Starting sail trim thread\n\r");
-  sailtrim_thread.attach(&sailtrim_callback);
+  sailtrim_thread.start(callback(sailtrim_callback));
 
   for (int i=60; i>0; i--){
     pc.printf("%d s remaining in test\n\r",i);
@@ -42,7 +43,7 @@ int main(){
   }
 
   pc.printf("Stopping sail trim thread\n\r");
-  sailtrim_thread.detach();
+  sailtrim_thread.terminate();
 
   pc.printf("Did it work? (y/n) ");
   pc.scanf("%c", &c);

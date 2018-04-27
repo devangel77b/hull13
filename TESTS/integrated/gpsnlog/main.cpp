@@ -9,7 +9,7 @@
 Serial pc(USBTX,USBRX);
 Gps gps(PC_2, PC_3);
 Logger logger(PC_10,PC_11,9600);
-Xbee telem(PC_12,PD_2,57600);
+XBee telem(PC_12,PD_2,57600);
 
 float longitude;
 float latitude;
@@ -24,7 +24,7 @@ byte second;
 byte hundredths; 
 unsigned long fix_age;
 unsigned long gdate;
-unsigned long dtime; 
+unsigned long gtime; 
 
 int main(){
   pc.printf("Sailbot 13.2.0\n\r");
@@ -40,7 +40,7 @@ int main(){
   telem.printf("Xbee output\n");
 
   while(1){
-    gps.get_datetime(&gdate, &gtime &fix_age);
+    gps.get_datetime(&gdate, &gtime, &fix_age);
     pc.printf("%d %d ",gdate,gtime);
     logger.printf("%d %d ",gdate,gtime);
     telem.printf("%d %d ",gdate,gtime);
