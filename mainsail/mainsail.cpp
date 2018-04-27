@@ -78,3 +78,28 @@ Mainsail::Mainsail(PinName pin):_pwm(pin){
 Mainsail::~Mainsail(void){
   debug("Mainsail destructor called.\n");
 } // ~Mainsail destructor
+
+
+
+void Mainsail::closehaul_stbd(void){
+  Mainsail::write(MAINSAIL_CLOSEHAUL);
+}
+void Mainsail::closereach_stbd(void){
+  Mainsail::write(MAINSAIL_CLOSEREACH);
+}
+void Mainsail::beamreach_stbd(void){
+  Mainsail::write(MAINSAIL_BEAMREACH);
+}
+void Mainsail::run(void){
+  Mainsail::write(MAINSAIL_RUN);
+}
+void Mainsail::closehaul_port(void){
+  Mainsail::write(-MAINSAIL_CLOSEHAUL);
+}
+void Mainsail::closereach_port(void){
+  Mainsail::write(-MAINSAIL_CLOSEREACH);
+}
+void Mainsail::beamreach_port(void){
+  Mainsail::write(-MAINSAIL_BEAMREACH);
+}
+

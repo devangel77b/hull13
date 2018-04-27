@@ -35,7 +35,12 @@ Serial telem(USBTX,USBRX,9600); // when working with wired connection
 Position WP1(-76.47538051521539,38.98428991077217,"WP1");
 Position WP2(-76.45824247091318,38.97715200765768,"WP2");
 Position WP3(-76.47184839108753,38.97126294386471,"WP3");
+Track leg1(&WP1, &WP2, "leg1");
+Track leg2(&WP2, &WP3, "leg2");
+Track leg3(&WP3, &WP1, "leg3");
 
+void sail_to_point(Position*); 
+void sail_track(Track*);
 
 int main(void){
   // startup messages
@@ -47,7 +52,7 @@ int main(void){
   telem.printf("  GPS v%s\n",GPS_VERSION);
   telem.printf("  Logger v%s\n",LOGGER_VERSION);
   telem.printf("  XBee v%s\n",XBEE_VERSION);
-  telem.printf("  Nav v%s\n", NAV_VERISON);
+  telem.printf("  Nav v%s\n", NAV_VERSION);
   telem.printf("\n");
   
   // verify waypoints
@@ -57,19 +62,184 @@ int main(void){
   telem.printf("  %s,%f,%f\n",WP3.name,WP3.longitude,WP3.latitude);
   telem.printf("\n");
 
-  // initialize and start all navigation processes
-  // WAIT FOR FIX LATER
+  // all navigation processes running
+  // wait a while logging stuff
+  // LATER
 
-  // turn to 1
+  // then go
+  sail_to_point(&WP1); // sail to WP1
+  sail_track(&leg1); // sail from WP1 to WP2
+  sail_track(&leg2); // sail from WP2 to WP3
+  sail_track(&leg3); // sail from WP3 to WP1
   
-  
-  // sail to 1
-
-  // turn to 2
-  // sail to 2
-
-  // turn to 3
-  // sail to 3
-
   // done
 } // main()
+
+
+
+
+void sail_to_point(Position * dest){
+  Position* fix = new Position();
+  unsigned long fix_age;
+  Track* leg = new Track(); 
+
+  // take a fix
+  gps.f_get_position(&(fix->latitude), &(fix->longitude), &fix_age);
+
+  // create a track
+  leg->startpoint = fix;
+  leg->endpoint = dest;
+
+  // sail_track from initial position to dest
+  sail_track(leg); 
+}
+
+void sail_track(Track * track){
+  Position * fix = new Position();
+  unsigned long fix_age;
+  float course_reqd;
+  float turn_reqd;
+  float distance;
+  int tacking;
+  float cte; 
+
+  telem.printf("Heading to %s, %f, %f.\n",
+	       track->endpoint->name,
+	       track->endpoint->longitude,
+	       track->endpoint->latitude);
+  
+  // take fix
+  gps.f_get_position(&(fix->latitude), &(fix->longitude), &fix_age);
+  telem.printf("Currently at to %f, %f.\n",
+	       fix->latitude,
+	       fix->latitude);
+  
+  // get course to destination
+  distance = fix->distance_to(track->endpoint);
+  while (distance > 20.0){
+    
+    course_reqd = fix->bearing_to(track->endpoint);
+    cte = track->crosstrack_distance(fix);
+    turn_reqd = turn_to(course_reqd, compass.hdg);
+    telem.printf("Mark bears %3.0f at %f m. ",turn_reqd,distance); 
+
+    if (turn_reqd > 2.0) // right turn required
+      {
+	telem.printf("Come right. "); 
+	if (windBirdie.rdeg < 0.0)
+	  { // falling off on right turn ok
+	    tacking = 0;
+	    rudder.right();
+	    	// trim the sail 
+	if (windBirdie.deg < 45.0) { mainsail.closehaul_stbd(); rudder.right();}
+	else if (windBirdie.deg < 60.0) { mainsail.closehaul_stbd();}
+	else if (windBirdie.deg < 90.0) { mainsail.closereach_stbd(); }
+	else if (windBirdie.deg < 135.0) { mainsail.beamreach_stbd(); }
+	else if (windBirdie.deg < 180.0) { mainsail.run(); }
+	else if (windBirdie.rdeg > -45.0) { mainsail.closehaul_port(); rudder.left();}
+	else if (windBirdie.rdeg > -60.0) { mainsail.closehaul_port(); }
+	else if (windBirdie.rdeg > -90.0) { mainsail.closereach_port(); }
+	else if (windBirdie.rdeg > -135.0) { mainsail.beamreach_port(); }
+	else if (windBirdie.rdeg > -180.0) { mainsail.run(); } 
+	  }
+	if (windBirdie.rdeg > 45)
+	  { // heading up right turn ok
+	    telem.printf("Upwinding, starboard tack. "); 
+	    tacking = 1; // starboard tack
+	    rudder.right();
+	    mainsail.closehaul_stbd();
+	  } // right turn ok
+	else if ((tacking == 1) && (cte < 50.0))
+	  { // tacking, keep going
+	    tacking = 1; 
+	    rudder.amidships();
+	    mainsail.closehaul_stbd(); 
+	  } // keep going
+	else
+	  {
+	    telem.printf("Gybing. ");
+	    tacking = -1; 
+	    rudder.left_full();
+	    mainsail.beamreach_stbd();
+	    Thread::wait(2000);
+	  } // chicken gybe
+      }
+    else if (turn_reqd < -2.0) // left turn required
+      {
+	telem.printf("Come left. ");
+	if (windBirdie.rdeg > 0.0)
+	  { // falling off on left turn ok
+	    tacking = 0;
+	    rudder.left();
+	    	// trim the sail 
+	if (windBirdie.deg < 45.0) { mainsail.closehaul_stbd(); rudder.right();}
+	else if (windBirdie.deg < 60.0) { mainsail.closehaul_stbd();}
+	else if (windBirdie.deg < 90.0) { mainsail.closereach_stbd(); }
+	else if (windBirdie.deg < 135.0) { mainsail.beamreach_stbd(); }
+	else if (windBirdie.deg < 180.0) { mainsail.run(); }
+	else if (windBirdie.rdeg > -45.0) { mainsail.closehaul_port(); rudder.left();}
+	else if (windBirdie.rdeg > -60.0) { mainsail.closehaul_port(); }
+	else if (windBirdie.rdeg > -90.0) { mainsail.closereach_port(); }
+	else if (windBirdie.rdeg > -135.0) { mainsail.beamreach_port(); }
+	else if (windBirdie.rdeg > -180.0) { mainsail.run(); } 
+      }
+	if (windBirdie.rdeg < -45)
+	  { // heading up right turn ok
+	    telem.printf("Upwinding, port tack. ");
+	    tacking = -1; // port tack
+	    rudder.left();
+	    mainsail.closehaul_port();
+	  } // right turn ok
+	else if ((tacking == -1) && (cte < 50.0))
+	  { // tacking, keep going
+	    tacking = -1; 
+	    rudder.amidships();
+	    mainsail.closehaul_port(); 
+	  } // keep going
+	else
+	  {
+	    telem.printf("Gybing. "); 
+	    tacking = 1; 
+	    rudder.right_full();
+	    mainsail.beamreach_port();
+	    Thread::wait(2000); 
+	  } // chicken gybe
+	telem.printf("\n");
+      }
+    else
+      {
+	telem.printf("Steady as she goes.\n");
+	rudder.amidships();
+	
+	// trim the sail 
+	if (windBirdie.deg < 45.0) { mainsail.closehaul_stbd(); rudder.right();}
+	else if (windBirdie.deg < 60.0) { mainsail.closehaul_stbd();}
+	else if (windBirdie.deg < 90.0) { mainsail.closereach_stbd(); }
+	else if (windBirdie.deg < 135.0) { mainsail.beamreach_stbd(); }
+	else if (windBirdie.deg < 180.0) { mainsail.run(); }
+	else if (windBirdie.rdeg > -45.0) { mainsail.closehaul_port(); rudder.left();}
+	else if (windBirdie.rdeg > -60.0) { mainsail.closehaul_port(); }
+	else if (windBirdie.rdeg > -90.0) { mainsail.closereach_port(); }
+	else if (windBirdie.rdeg > -135.0) { mainsail.beamreach_port(); }
+	else if (windBirdie.rdeg > -180.0) { mainsail.run(); } 
+      }
+
+    Thread::wait(1000); 
+    
+      // take fix
+    gps.f_get_position(&(fix->latitude), &(fix->longitude), &fix_age);
+    telem.printf("Currently at to %f, %f.\n",
+		 fix->latitude,
+		 fix->latitude);
+
+    // get course to destination
+    distance = fix->distance_to(track->endpoint);
+
+  }
+  telem.printf("Reached %s, %f, %f\n",
+	       track->endpoint->name,
+	       track->endpoint->longitude,
+	       track->endpoint->latitude);
+  
+}
+

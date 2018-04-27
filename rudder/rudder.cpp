@@ -77,3 +77,24 @@ Rudder::Rudder(PinName pin):_pwm(pin){
 Rudder::~Rudder(void){
   debug("Rudder destructor called.\n");
 } // ~Rudder destructor
+
+
+void Rudder::right(void){
+  Rudder::write(RUDDER_SMALL);
+}
+
+void Rudder::right_full(void){
+  Rudder::write(RUDDER_FULL);
+}
+
+void Rudder::left(void){
+  Rudder::write(-RUDDER_SMALL);
+}
+
+void Rudder::left_full(void){
+  Rudder::write(-RUDDER_FULL); 
+}
+
+void Rudder::amidships(void){
+  Rudder::write(0.0); 
+}

@@ -24,6 +24,10 @@ void WindBirdie::_read_process(void){
     // Take reading and apply calibration
     WindBirdie::raw = WindBirdie::_WBIn.read();
     WindBirdie::deg = WINDBIRDIE_CAL_M*WindBirdie::raw + WINDBIRDIE_CAL_B;
+    if (WindBirdie::deg < 180)
+      { WindBirdie::rdeg = WindBirdie::deg;}
+    else
+      { WindBirdie::rdeg = -(360.0-WindBirdie::deg);}
 
     // Thread-safe wait to relinquish to other processes. 
     Thread::wait(WINDBIRDIE_UPDATE_PERIOD);

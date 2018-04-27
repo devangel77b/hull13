@@ -65,7 +65,10 @@ class WindBirdie{
   float raw;
 
   /// float that holds the most recent reading in degrees
-  float deg; 
+  float deg;
+
+  /// float to hold most recent reading in degrees relative
+  float rdeg; 
   
   // function prototype for the constructor (very special).
   // the constructor creates a new WindBirdie object...

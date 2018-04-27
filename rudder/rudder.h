@@ -17,6 +17,8 @@
 #define RUDDER_RANGE_US 600 // on either side of 0 position
 #define RUDDER_RANGE_DEG 45 // Paul Miller ordered 90 degree range
 
+#define RUDDER_SMALL 5.0
+#define RUDDER_FULL 15.0
 
 
 /**
@@ -50,7 +52,12 @@ class Rudder{
   void write(float deg); // sets the rudder angle in degrees
   float read(void); // gets the rudder angle in degrees
 
-  // TODO Rudder.amidships(), Rudder.left(), Rudder.right(), etc. 
+  // Rudder.amidships(), Rudder.left(), Rudder.right(), etc. 
+  void right(void);
+  void right_full(void);
+  void left(void); 
+  void left_full(void);
+  void amidships(void); 
   
 
 }; // class Rudder
