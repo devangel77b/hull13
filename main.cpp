@@ -54,13 +54,30 @@ int main(void){
   telem.printf("  XBee v%s\n",XBEE_VERSION);
   telem.printf("  Nav v%s\n", NAV_VERSION);
   telem.printf("\n");
-  
+
+  logger.printf("Welcome to Sailbot version %s\n",SAILBOT_VERSION);
+  logger.printf("  Rudder v%s\n",RUDDER_VERSION);
+  logger.printf("  Mainsail v%s\n",MAINSAIL_VERSION);
+  logger.printf("  Wind birdie v%s\n",WINDBIRDIE_VERSION);
+  logger.printf("  Compass v%s\n",COMPASS_VERSION);
+  logger.printf("  GPS v%s\n",GPS_VERSION);
+  logger.printf("  Logger v%s\n",LOGGER_VERSION);
+  logger.printf("  XBee v%s\n",XBEE_VERSION);
+  logger.printf("  Nav v%s\n", NAV_VERSION);
+  logger.printf("\n");
+
   // verify waypoints
   telem.printf("Waypoints:\n");
   telem.printf("  %s,%f,%f\n",WP1.name,WP1.longitude,WP1.latitude);
   telem.printf("  %s,%f,%f\n",WP2.name,WP2.longitude,WP2.latitude);
   telem.printf("  %s,%f,%f\n",WP3.name,WP3.longitude,WP3.latitude);
   telem.printf("\n");
+
+  logger.printf("Waypoints:\n");
+  logger.printf("  %s,%f,%f\n",WP1.name,WP1.longitude,WP1.latitude);
+  logger.printf("  %s,%f,%f\n",WP2.name,WP2.longitude,WP2.latitude);
+  logger.printf("  %s,%f,%f\n",WP3.name,WP3.longitude,WP3.latitude);
+  logger.printf("\n");
 
   // all navigation processes running
   // wait a while logging stuff
@@ -97,6 +114,8 @@ void sail_to_point(Position * dest){
 void sail_track(Track * track){
   Position * fix = new Position();
   unsigned long fix_age;
+  unsigned long gdate;
+  unsigned long gtime; 
   float course_reqd;
   float turn_reqd;
   float distance;
@@ -107,12 +126,21 @@ void sail_track(Track * track){
 	       track->endpoint->name,
 	       track->endpoint->longitude,
 	       track->endpoint->latitude);
+  logger.printf("Heading to %s, %f, %f.\n",
+	       track->endpoint->name,
+	       track->endpoint->longitude,
+	       track->endpoint->latitude);
   
   // take fix
   gps.f_get_position(&(fix->latitude), &(fix->longitude), &fix_age);
   telem.printf("Currently at to %f, %f.\n",
 	       fix->latitude,
 	       fix->latitude);
+  logger.printf("Currently at to %f, %f.\n",
+	       fix->latitude,
+	       fix->latitude);
+  gps.get_datetime(&gdate, &gtime, &fix_age); 
+  logger.printf("date %d time %d\n",gdate,gtime); 
   
   // get course to destination
   distance = fix->distance_to(track->endpoint);
@@ -121,11 +149,13 @@ void sail_track(Track * track){
     course_reqd = fix->bearing_to(track->endpoint);
     cte = track->crosstrack_distance(fix);
     turn_reqd = turn_to(course_reqd, compass.hdg);
-    telem.printf("Mark bears %3.0f at %f m. ",turn_reqd,distance); 
+    telem.printf("Mark bears %3.0f at %f m. ",turn_reqd,distance);
+    logger.printf("Mark bears %3.0f at %f m. ",turn_reqd,distance); 
 
     if (turn_reqd > 2.0) // right turn required
       {
-	telem.printf("Come right. "); 
+	telem.printf("Come right. ");
+	logger.printf("Come right. ");
 	if (windBirdie.rdeg < 0.0)
 	  { // falling off on right turn ok
 	    tacking = 0;
@@ -144,7 +174,8 @@ void sail_track(Track * track){
 	  }
 	if (windBirdie.rdeg > 45)
 	  { // heading up right turn ok
-	    telem.printf("Upwinding, starboard tack. "); 
+	    telem.printf("Upwinding, starboard tack. ");
+	    logger.printf("Upwinding, starboard tack. "); 
 	    tacking = 1; // starboard tack
 	    rudder.right();
 	    mainsail.closehaul_stbd();
@@ -158,15 +189,20 @@ void sail_track(Track * track){
 	else
 	  {
 	    telem.printf("Gybing. ");
+	    logger.printf("Gybing. ");
 	    tacking = -1; 
 	    rudder.left_full();
 	    mainsail.beamreach_stbd();
 	    Thread::wait(2000);
 	  } // chicken gybe
+	telem.printf("\n");
+	logger.printf("\n");
       }
+    
     else if (turn_reqd < -2.0) // left turn required
       {
 	telem.printf("Come left. ");
+	logger.printf("Come left. ");
 	if (windBirdie.rdeg > 0.0)
 	  { // falling off on left turn ok
 	    tacking = 0;
@@ -186,6 +222,7 @@ void sail_track(Track * track){
 	if (windBirdie.rdeg < -45)
 	  { // heading up right turn ok
 	    telem.printf("Upwinding, port tack. ");
+	    logger.printf("Upwinding, port tack. ");
 	    tacking = -1; // port tack
 	    rudder.left();
 	    mainsail.closehaul_port();
@@ -198,17 +235,20 @@ void sail_track(Track * track){
 	  } // keep going
 	else
 	  {
-	    telem.printf("Gybing. "); 
+	    telem.printf("Gybing. ");
+	    logger.printf("Gybing. "); 
 	    tacking = 1; 
 	    rudder.right_full();
 	    mainsail.beamreach_port();
 	    Thread::wait(2000); 
 	  } // chicken gybe
 	telem.printf("\n");
+	logger.printf("\n");
       }
     else
       {
 	telem.printf("Steady as she goes.\n");
+	logger.printf("Steady as she goes.\n");
 	rudder.amidships();
 	
 	// trim the sail 
@@ -231,7 +271,12 @@ void sail_track(Track * track){
     telem.printf("Currently at to %f, %f.\n",
 		 fix->latitude,
 		 fix->latitude);
-
+    logger.printf("Currently at to %f, %f.\n",
+		 fix->latitude,
+		 fix->latitude);
+    gps.get_datetime(&gdate, &gtime, &fix_age); 
+    logger.printf("date %d time %d\n",gdate,gtime); 
+    
     // get course to destination
     distance = fix->distance_to(track->endpoint);
 
@@ -240,6 +285,10 @@ void sail_track(Track * track){
 	       track->endpoint->name,
 	       track->endpoint->longitude,
 	       track->endpoint->latitude);
+  logger.printf("Reached %s, %f, %f\n",
+		track->endpoint->name,
+		track->endpoint->longitude,
+		track->endpoint->latitude);
   
 }
 
