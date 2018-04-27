@@ -16,6 +16,7 @@
 #include "nav.h"
 
 #define SAILBOT_VERSION "13.2.0"
+#define XBEEBAUD 57600
 
 // actuators
 Rudder rudder(PC_8);       // rudder, Hitec HS5646WP
@@ -28,7 +29,7 @@ Gps gps(PC_2, PC_3); // gps, Sparkfun Copernicus II (TX,RX)
 
 // comms
 Logger logger(PC_10,PC_11,9600); // OpenLogger (PC_10, PC_11)
-//XBee telem(PC_12,PD_2); // Xbee module, (PC_12, PD_2)
+//XBee telem(PC_12,PD_2,XBEEBAUD); // Xbee module, (PC_12, PD_2)
 Serial telem(USBTX,USBRX,9600); // when working with wired connection
 
 // waypoints
