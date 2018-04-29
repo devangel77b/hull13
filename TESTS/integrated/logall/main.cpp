@@ -1,3 +1,9 @@
+/*
+  TESTS/integrated/logall/main.cpp
+  Log everything test while pushing around on a cart
+  Dennis Evangelista, 2018
+*/
+
 #include "mbed.h"
 #include "rtos.h"
 #include "stdio.h"
@@ -33,51 +39,68 @@ unsigned long gtime;
 float hdg; 
 
 int main(){
-  pc.printf("Sailbot 13.2.0\n\r");
+  pc.printf("Windbirdie version %s\n\r",WINDBIRDIE_VERSION);
+  pc.printf("Compass version %s\n\r",COMPASS_VERSION);
+  pc.printf("GPS version %s\n\r",GPS_VERSION);
+  pc.printf("Logger version %s\n\r",LOGGER_VERSION);
+  pc.printf("XBee version %s\n\r",XBEE_VERSION);
   pc.printf("Integrated test of GPS and logging\n\r");
-  pc.printf("Take a walk!\n\r"); 
+  pc.printf("Take a walk!\n\r");
+  pc.printf("wb_raw,wb_deg,wb_rel,mag_hdg,date,time,yyyymmdd,HH:mm:ss.ss,lon,lat,cse,spd\n\r");
 
-  logger.printf("Sailbot 13.2.0\n");
+  logger.printf("Windbirdie version %s\n\r",WINDBIRDIE_VERSION);
+  logger.printf("Compass version %s\n\r",COMPASS_VERSION);
+  logger.printf("GPS version %s\n\r",GPS_VERSION);
+  logger.printf("Logger version %s\n\r",LOGGER_VERSION);
+  logger.printf("XBee version %s\n\r",XBEE_VERSION);
+  logger.printf("Integrated test of GPS and logging\n\r");
   logger.printf("Integrated test of GPS and logging\n");
-  logger.printf("OpenLogger output\n");
+  logger.printf("Take a walk! OpenLogger output\n\r");
+  logger.printf("wb_raw,wb_deg,wb_rel,mag_hdg,date,time,yyyymmdd,HH:mm:ss.ss,lon,lat,cse,spd\n\r");
   
-  telem.printf("Sailbot 13.2.0\n");
-  telem.printf("Integrated test of GPS and logging\n");
-  telem.printf("Xbee output\n");
-
+  telem.printf("Windbirdie version %s\n\r",WINDBIRDIE_VERSION);
+  telem.printf("Compass version %s\n\r",COMPASS_VERSION);
+  telem.printf("GPS version %s\n\r",GPS_VERSION);
+  telem.printf("Logger version %s\n\r",LOGGER_VERSION);
+  telem.printf("XBee version %s\n\r",XBEE_VERSION);
+  telem.printf("Integrated test of GPS and logging\n\r");
+  telem.printf("Integrated test of GPS and logging\n\r");
+  telem.printf("Take a walk! Xbee output\n\r");
+  telem.printf("wb_raw,wb_deg,wb_rel,mag_hdg,date,time,yyyymmdd,HH:mm:ss.ss,lon,lat,cse,spd\n\r");
+  
   while(1){
-    pc.printf("wind birdie: %f %f %f\n\r",windBirdie.raw,windBirdie.deg,windBirdie.rdeg);
-    logger.printf("wind birdie: %f %f %f\n",windBirdie.raw,windBirdie.deg,windBirdie.rdeg);
-    telem.printf("wind birdie: %f %f %f\n",windBirdie.raw,windBirdie.deg,windBirdie.rdeg);
+    pc.printf("%5.3f, %5.1f, %5.1f, ",windBirdie.raw,windBirdie.deg,windBirdie.rdeg);
+    logger.printf("%5.3f, %5.1f, %5.1f, ",windBirdie.raw,windBirdie.deg,windBirdie.rdeg);
+    telem.printf("%5.3f, %5.1f, %5.1f, ",windBirdie.raw,windBirdie.deg,windBirdie.rdeg);
 
     hdg = compass.hdg; 
-    pc.printf("compass: %f\n\r",hdg);
-    logger.printf("compass: %f\n",hdg);
-    telem.printf("compass: %f\n",hdg);
+    pc.printf("%5.1f, ",hdg);
+    logger.printf("%5.1f, ",hdg);
+    telem.printf("%5.1f, ",hdg);
     
     
     gps.get_datetime(&gdate, &gtime, &fix_age);
-    pc.printf("gps: %d %d ",gdate,gtime);
-    logger.printf("gps: %d %d ",gdate,gtime);
-    telem.printf("gps: %d %d ",gdate,gtime);
+    pc.printf("%d, %d, ",gdate,gtime);
+    logger.printf("%d, %d, ",gdate,gtime);
+    telem.printf("%d, %d, ",gdate,gtime);
 
     gps.crack_datetime(&year,&month,&day,&hour,&minute,&second,&hundredths,&fix_age);
-    pc.printf("%d%02d%02d %02d:%02d:%02d.%02d ",year,month,day,hour,minute,second,hundredths);
-    logger.printf("%d%02d%02d %02d:%02d:%02d.%02d ",year,month,day,hour,minute,second,hundredths);
-    telem.printf("%d%02d%02d %02d:%02d:%02d.%02d ",year,month,day,hour,minute,second,hundredths); 
+    pc.printf("%d%02d%02d, %02d:%02d:%02d.%02d, ",year,month,day,hour,minute,second,hundredths);
+    logger.printf("%d%02d%02d, %02d:%02d:%02d.%02d, ",year,month,day,hour,minute,second,hundredths);
+    telem.printf("%d%02d%02d, %02d:%02d:%02d.%02d, ",year,month,day,hour,minute,second,hundredths); 
     
     gps.f_get_position(&latitude, &longitude, &fix_age);
     course = gps.f_course();
     speed = gps.f_speed_knots();
-    pc.printf("%f %f C%05.1f S%4.1\n\r",longitude,latitude,course,speed);
-    logger.printf("%f %f C%05.1f S%4.1\n",longitude,latitude,course,speed);
-    telem.printf("%f %f C%05.1f S%4.1\n",longitude,latitude,course,speed);
+    pc.printf("%f, %f, %5.1f, %4.1\n\r",longitude,latitude,course,speed);
+    logger.printf("%f, %f, %5.1f, %4.1\n\r",longitude,latitude,course,speed);
+    telem.printf("%f, %f, %5.1f, %4.1\n\r",longitude,latitude,course,speed);
 
 
   
     
     Thread::wait(1000); 
-  }
+  } // while(1)
 
   
-}
+} // TESTS/integrated/logall/main
