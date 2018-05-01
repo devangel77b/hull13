@@ -15,7 +15,7 @@
 #include "mbed.h"
 #include "rtos.h"
 
-#define WINDBIRDIE_VERSION "13.2.0"
+#define WINDBIRDIE_VERSION "13.2.1"
 
 #define WINDBIRDIE_UPDATE_PERIOD 500 // ms, default update period
 #define WINDBIRDIE_CAL_M 450.0 // calibration constant, fix! TODO

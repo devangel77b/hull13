@@ -5,7 +5,7 @@
 #include "rtos.h"
 #include "math.h"
 
-#define NAV_VERSION "13.2.0"
+#define NAV_VERSION "13.2.1"
 #define RAD2DEG 57.2958
 #define REARTH 6371.0e3
 

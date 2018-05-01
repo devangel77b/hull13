@@ -12,7 +12,7 @@
 #include "mbed.h"
 #include "rtos.h"
 
-#define LOGGER_VERSION "13.2.0"
+#define LOGGER_VERSION "13.2.1"
 
 /**
    For now, the Logger inherits from Serial. 

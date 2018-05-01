@@ -9,7 +9,7 @@
 #include "mbed.h"
 #include "rtos.h"
 
-#define MAINSAIL_VERSION "13.2.0"
+#define MAINSAIL_VERSION "13.2.1"
 
 /// The mainsail for Hull 13 mod 2 is a Hitec D845WP servo
 #define MAINSAIL_PERIOD_MS 20 // 50Hz, 20 ms

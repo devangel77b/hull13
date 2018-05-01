@@ -9,7 +9,7 @@
 #include "mbed.h"
 #include "rtos.h"
 
-#define RUDDER_VERSION "13.2.0"
+#define RUDDER_VERSION "13.2.1"
 
 /// The rudder for Hull 13 mod 2 is a Hitec HS5646WP servo
 #define RUDDER_PERIOD_MS 20 // 50Hz, 20 ms

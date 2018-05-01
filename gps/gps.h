@@ -18,7 +18,7 @@
 #include "rtos.h"
 #include "TinyGPS.h" // parser from DRob
 
-#define GPS_VERSION "13.2.0"
+#define GPS_VERSION "13.2.1"
 
 #define GPS_UPDATE_PERIOD 10 // ms, default update period
 

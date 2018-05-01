@@ -12,7 +12,7 @@
 #include "mbed.h"
 #include "rtos.h"
 
-#define XBEE_VERSION "13.2.0"
+#define XBEE_VERSION "13.2.1"
 
 /**
    For now, the XBee inherits from Serial. 

@@ -15,7 +15,7 @@
 #include "xbee.h"
 #include "nav.h"
 
-#define SAILBOT_VERSION "13.2.0"
+#define SAILBOT_VERSION "13.2.1"
 #define XBEEBAUD 57600
 
 // actuators
