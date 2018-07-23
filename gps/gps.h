@@ -16,9 +16,9 @@
 
 #include "mbed.h"
 #include "rtos.h"
-#include "TinyGPS.h" // parser from DRob
+#include "TinyGPSplus.h" // parser from Sir_Binky
 
-#define GPS_VERSION "13.2.1"
+#define GPS_VERSION "13.3.0"
 
 #define GPS_UPDATE_PERIOD 10 // ms, default update period
 
@@ -51,7 +51,7 @@ class Gps{
   mbed::Serial _gps; // Serial port the sensor is connected to
   Thread _thread; // a Thread for running the sensor in.
   void _rx_callback(void); // the actual routine running in the Thread.
-  TinyGPS _parser; 
+  TinyGPSPlus _parser; 
 
 
 

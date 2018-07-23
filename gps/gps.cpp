@@ -6,7 +6,7 @@
 #include "mbed.h"
 #include "rtos.h"
 #include "gps.h"
-#include "TinyGPS.h"
+#include "TinyGPSplus.h"
 
 
 
@@ -68,53 +68,53 @@ Gps::~Gps(){
 
 
 void Gps::get_position(long *latitude, long *longitude, unsigned long *fix_age){
-  Gps::_parser.get_position(latitude, longitude, fix_age); 
+  //Gps::_parser.get_position(latitude, longitude, fix_age); 
 }
 
 void Gps::get_datetime(unsigned long *date, unsigned long *time, unsigned long *fix_age){
-  Gps::_parser.get_datetime(date, time, fix_age);
+  //Gps::_parser.get_datetime(date, time, fix_age);
 }
 
 unsigned long Gps::course(){
-  return Gps::_parser.course();
+  //return Gps::_parser.course();
 }
 
 unsigned long Gps::speed(){
-  return Gps::_parser.speed();
+  //return Gps::_parser.speed();
 }
 
 unsigned short Gps::satellites(){
-  return Gps::_parser.satellites();
+  //return Gps::_parser.satellites();
 }
   
 void Gps::f_get_position(float * latitude,
 			 float * longitude,
 			 unsigned long * fix_age){
-  Gps::_parser.f_get_position(latitude, longitude, fix_age);
+  //Gps::_parser.f_get_position(latitude, longitude, fix_age);
 }
 
 void Gps::crack_datetime(int *year, byte *month, byte *day, 
 			 byte *hour, byte *minute, byte *second,
 			 byte *hundredths, unsigned long *fix_age){
-  Gps::_parser.crack_datetime(year, month, day,
-			      hour, minute, second,
-			      hundredths, fix_age);
+  //Gps::_parser.crack_datetime(year, month, day,
+  //			      hour, minute, second,
+  //			      hundredths, fix_age);
 }
 
 float Gps::f_altitude(){
-  return Gps::_parser.f_altitude();
+  //return Gps::_parser.f_altitude();
 }
 
 float Gps::f_course(){
-  return Gps::_parser.f_course();
+  //return Gps::_parser.f_course();
 }
 
 float Gps::f_speed_knots(){
-  return Gps::_parser.f_speed_knots();
+  //return Gps::_parser.f_speed_knots();
 }
 
 float Gps::f_speed_mps(){
-  return Gps::_parser.f_speed_mps();
+  //return Gps::_parser.f_speed_mps();
 }
 
 
