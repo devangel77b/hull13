@@ -22,19 +22,19 @@ int main(){
   pc.printf("Logger version %s\n\r",LOGGER_VERSION);
   pc.printf("Integrated test of GPS and logging\n\r");
   pc.printf("Take a walk!\n\r");
-  pc.printf("date, time, YYMMDD, HH:mm:ss.ss, lat, long, cse, spd, sat\n\r");
+  pc.printf("date, time, YYYY-MM-DD, HH:mm:ss.ss, lat, long, cog, sog, sat\n\r");
 
   logger.printf("GPS version %s\n",GPS_VERSION);
   logger.printf("Logger version %s\n",LOGGER_VERSION);
   logger.printf("Integrated test of GPS and logging\n");
   logger.printf("Take a walk! OpenLogger output\n");
-  logger.printf("date, time, YYMMDD, HH:mm:ss.ss, lat, long, cse, spd, sat\n");
+  logger.printf("date, time, YYYY-MM-DD, HH:mm:ss.ss, lat, long, cog, sog, sat\n");
   
   telem.printf("GPS version %s\n",GPS_VERSION);
   telem.printf("Logger version %s\n",LOGGER_VERSION);
   telem.printf("Integrated test of GPS and logging\n");
   telem.printf("Take a walk! Xbee output\n");
-  telem.printf("date, time, YYYYMMDD, HH:mm:ss.ss, lat, long, cse, spd, sat\n");
+  telem.printf("date, time, YYYY-MM-DD, HH:mm:ss.ss, lat, long, cog, sog, sat\n");
   
   while(1){
     // date
