@@ -21,22 +21,8 @@ Gps gps(PC_2, PC_3);
 
 Logger logger(PC_10,PC_11,9600);
 XBee telem(PC_12,PD_2,57600);
+float hdg;
 
-float longitude;
-float latitude;
-float course;
-float speed;
-int year;
-byte month;
-byte day;
-byte hour;
-byte minute;
-byte second;
-byte hundredths; 
-unsigned long fix_age;
-unsigned long gdate;
-unsigned long gtime; 
-float hdg; 
 
 int main(){
   pc.printf("Windbirdie version %s\n\r",WINDBIRDIE_VERSION);
@@ -46,7 +32,7 @@ int main(){
   pc.printf("XBee version %s\n\r",XBEE_VERSION);
   pc.printf("Integrated test of GPS and logging\n\r");
   pc.printf("Take a walk!\n\r");
-  pc.printf("wb_raw,wb_deg,wb_rel,mag_hdg,date,time,yyyymmdd,HH:mm:ss.ss,lon,lat,cse,spd\n\r");
+  pc.printf("wb_raw,wb_deg,wb_rel,mag_hdg,date,time,yyyy-mm-dd,HH:mm:ss.ss,lat,lon,cog,sog,sat\n\r");
 
   logger.printf("Windbirdie version %s\n\r",WINDBIRDIE_VERSION);
   logger.printf("Compass version %s\n\r",COMPASS_VERSION);
@@ -56,7 +42,7 @@ int main(){
   logger.printf("Integrated test of GPS and logging\n\r");
   logger.printf("Integrated test of GPS and logging\n");
   logger.printf("Take a walk! OpenLogger output\n\r");
-  logger.printf("wb_raw,wb_deg,wb_rel,mag_hdg,date,time,yyyymmdd,HH:mm:ss.ss,lon,lat,cse,spd\n\r");
+  logger.printf("wb_raw,wb_deg,wb_rel,mag_hdg,date,time,yyyy-mm-dd,HH:mm:ss.ss,lat,lon,cog,sog,sat\n\r");
   
   telem.printf("Windbirdie version %s\n\r",WINDBIRDIE_VERSION);
   telem.printf("Compass version %s\n\r",COMPASS_VERSION);
@@ -66,38 +52,130 @@ int main(){
   telem.printf("Integrated test of GPS and logging\n\r");
   telem.printf("Integrated test of GPS and logging\n\r");
   telem.printf("Take a walk! Xbee output\n\r");
-  telem.printf("wb_raw,wb_deg,wb_rel,mag_hdg,date,time,yyyymmdd,HH:mm:ss.ss,lon,lat,cse,spd\n\r");
+  telem.printf("wb_raw,wb_deg,wb_rel,mag_hdg,date,time,yyyy-mm-dd,HH:mm:ss.ss,lat,lon,cog,sog,sat\n\r");
   
   while(1){
+    // wind birdie readings
     pc.printf("%5.3f, %5.1f, %5.1f, ",windBirdie.raw,windBirdie.deg,windBirdie.rdeg);
     logger.printf("%5.3f, %5.1f, %5.1f, ",windBirdie.raw,windBirdie.deg,windBirdie.rdeg);
     telem.printf("%5.3f, %5.1f, %5.1f, ",windBirdie.raw,windBirdie.deg,windBirdie.rdeg);
 
+    // compass heading (magnetic)
     hdg = compass.hdg; 
     pc.printf("%5.1f, ",hdg);
     logger.printf("%5.1f, ",hdg);
     telem.printf("%5.1f, ",hdg);
     
+    // date
+    if (gps.parser.date.isValid()){
+      pc.printf("%d, ",gps.parser.date.value());
+      logger.printf("%d, ",gps.parser.date.value());
+      telem.printf("%d, ",gps.parser.date.value());
+    }
+    else {
+      pc.printf("NA, ");
+      logger.printf("NA, ");
+      telem.printf("NA, ");
+    }
     
-    gps.get_datetime(&gdate, &gtime, &fix_age);
-    pc.printf("%d, %d, ",gdate,gtime);
-    logger.printf("%d, %d, ",gdate,gtime);
-    telem.printf("%d, %d, ",gdate,gtime);
+    // time
+    if (gps.parser.time.isValid()){
+      pc.printf("%d, ",gps.parser.time.value());
+      logger.printf("%d, ",gps.parser.time.value());
+      telem.printf("%d, ",gps.parser.time.value());
+    }
+    else {
+      pc.printf("NA, ");
+      logger.printf("NA, ");
+      telem.printf("NA, ");
+    }
 
-    gps.crack_datetime(&year,&month,&day,&hour,&minute,&second,&hundredths,&fix_age);
-    pc.printf("%d%02d%02d, %02d:%02d:%02d.%02d, ",year,month,day,hour,minute,second,hundredths);
-    logger.printf("%d%02d%02d, %02d:%02d:%02d.%02d, ",year,month,day,hour,minute,second,hundredths);
-    telem.printf("%d%02d%02d, %02d:%02d:%02d.%02d, ",year,month,day,hour,minute,second,hundredths); 
+    // date
+    if (gps.parser.date.isValid()){
+      pc.printf("%04d-%02d-%02d, ",gps.parser.date.year(),
+		gps.parser.date.month(),
+		gps.parser.date.day());
+      logger.printf("%04d-%02d-%02d, ",gps.parser.date.year(),
+		    gps.parser.date.month(),
+		    gps.parser.date.day());
+      telem.printf("%04d-%02d-%02d, ",gps.parser.date.year(),
+		   gps.parser.date.month(),
+		   gps.parser.date.day());      
+    }
+    else {
+      pc.printf("NA, ");
+      logger.printf("NA, ");
+      telem.printf("NA, ");
+    }
+
+    // time
+    if (gps.parser.time.isValid()){
+      pc.printf("%02d:%02d:%02d.%02d, ",
+		gps.parser.time.hour(),
+		gps.parser.time.minute(),
+		gps.parser.time.second(),
+		gps.parser.time.centisecond());
+      logger.printf("%02d:%02d:%02d.%02d, ",
+		    gps.parser.time.hour(),
+		    gps.parser.time.minute(),
+		    gps.parser.time.second(),
+		    gps.parser.time.centisecond());
+      telem.printf("%02d:%02d:%02d.%02d, ",
+		   gps.parser.time.hour(),
+		   gps.parser.time.minute(),
+		   gps.parser.time.second(),
+		   gps.parser.time.centisecond());
+    }
+    else {
+      pc.printf("NA, ");
+      logger.printf("NA, ");
+      telem.printf("NA, ");
+    }
     
-    gps.f_get_position(&latitude, &longitude, &fix_age);
-    course = gps.f_course();
-    speed = gps.f_speed_knots();
-    pc.printf("%f, %f, %5.1f, %4.1\n\r",longitude,latitude,course,speed);
-    logger.printf("%f, %f, %5.1f, %4.1\n\r",longitude,latitude,course,speed);
-    telem.printf("%f, %f, %5.1f, %4.1\n\r",longitude,latitude,course,speed);
+    // lat and lon
+    if (gps.parser.location.isValid()){
+      pc.printf("%f, %f, ",gps.parser.location.lat(),
+		gps.parser.location.lng());
+      logger.printf("%f, %f, ",gps.parser.location.lat(),
+		    gps.parser.location.lng());
+      telem.printf("%f, %f, ",gps.parser.location.lat(),
+		   gps.parser.location.lng());
+    }
+    else {
+      pc.printf("NA, NA, ");
+      logger.printf("NA, NA, ");
+      telem.printf("NA, NA, ");
+    }
 
+    // course
+    if (gps.parser.course.isValid()){
+      pc.printf("%05.1f", gps.parser.course.deg());
+      logger.printf("%05.1f", gps.parser.course.deg());
+      telem.printf("%05.1f", gps.parser.course.deg());
+    }
+    else {
+      pc.printf("NA, ");
+      logger.printf("NA, ");
+      telem.printf("NA, ");
+    }
 
-  
+    // speed
+    if (gps.parser.speed.isValid()){
+      pc.printf("%04.1, ",gps.parser.speed.knots());
+      logger.printf("%04.1",gps.parser.speed.knots());
+      telem.printf("%04.1f",gps.parser.speed.knots());
+    }
+    else {
+      pc.printf("NA, ");
+      logger.printf("NA, ");
+      telem.printf("NA, ");
+    }
+
+    // satellites
+    pc.printf("%d\n\r",gps.parser.satellites.value());
+    logger.printf("%d\n",gps.parser.satellites.value());
+    telem.printf("%d\n",gps.parser.satellites.value());
+    
     
     Thread::wait(1000); 
   } // while(1)
