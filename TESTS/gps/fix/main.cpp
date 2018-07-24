@@ -8,36 +8,42 @@
 #include "rtos.h"
 #include "stdio.h"
 #include "gps.h"
-#include "TinyGPS.h"
+#include "TinyGPSplus.h"
 #include "unity.h"
 
 Serial pc(USBTX,USBRX);
 Gps gps(PC_2, PC_3);
-bool b;
 char c;
 
-float latitude;
-float longitude;
-unsigned long fix_age;
-unsigned long course;
-unsigned long speed;
-unsigned long date;
-unsigned long t;
-unsigned int satellites; 
+int n=0;
 
 Thread thready;
 
 void printy(void){
-  if (gps.newdata){
-      pc.printf("New fix\n\r");
-      gps.f_get_position(&latitude, &longitude, &fix_age);
-      course = gps.f_course();
-      speed = gps.f_speed_knots();
-      satellites = gps.satellites();
-      pc.printf("lat %f, lon %f, cse %f, spd %f, n %d\n",
-		latitude, longitude, course, speed, satellites);
-    }
+  while(1){
+    pc.printf("%d. ",n++);
+    if (gps.parser.location.isValid())
+      pc.printf("lat %f, lon %f ",
+		gps.parser.location.lat(),
+		gps.parser.location.lng());
+    else
+      pc.printf("lat NA, lon NA ");
+
+    if (gps.parser.course.isValid())
+      pc.printf("course %f, ",gps.parser.course.deg());
+    else
+      pc.printf("course NA, ");
+
+    if (gps.parser.speed.isValid())
+      pc.printf("speed %f knots, ",gps.parser.speed.knots());
+    else
+      pc.printf("speed NA, ");
+
+    pc.printf("sats %d\n\r",gps.parser.satellites.value());
+    Thread::wait(1000);
+  }
 }
+
 
 
 int main(void){
@@ -51,9 +57,9 @@ int main(void){
 
   thready.start(callback(printy));
 
-  pc.printf("Was it successful (y/n)?\n\r");
-  pc.scanf("%c", &c);
-  TEST_ASSERT_TRUE_MESSAGE((c == 'y'),"GPS fix test failed\n\r");
+  //pc.printf("Was it successful (y/n)?\n\r");
+  //pc.scanf("%c", &c);
+  //TEST_ASSERT_TRUE_MESSAGE((c == 'y'),"GPS fix test failed\n\r");
 
 }// main() for TESTS/gps/fix
 

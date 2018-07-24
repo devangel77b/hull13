@@ -51,13 +51,12 @@ class Gps{
   mbed::Serial _gps; // Serial port the sensor is connected to
   Thread _thread; // a Thread for running the sensor in.
   void _rx_callback(void); // the actual routine running in the Thread.
-  TinyGPSPlus _parser; 
-
 
 
  public:
   // The outside world is allowed to use these...
-  bool newdata; 
+  TinyGPSPlus parser;
+  // the parser provides ways to get position, date, time, course, speed
   
   // function prototype for the constructor (very special).
   // the constructor creates a new Gps object...
@@ -67,25 +66,6 @@ class Gps{
   // function prototype for the destructor (also special).
   // the destructor is called when the Gps object is disposed of.
   ~Gps(void);
-
-  // expose these from the parser
-  void get_position(long *latitude, long *longitude, unsigned long *fix_age=0);
-  void get_datetime(unsigned long *date, unsigned long *time, unsigned long *fix_age=0);
-  unsigned long course();
-  unsigned long speed();
-  unsigned short satellites();
-  
-  void f_get_position(float * latitude,
-		      float * longitude,
-		      unsigned long * fix_age=0);
-  void crack_datetime(int *year, byte *month, byte *day, 
-    byte *hour, byte *minute, byte *second, byte *hundredths = 0, unsigned long *fix_age = 0);
-  float f_altitude();
-  float f_course();
-  float f_speed_knots();
-  float f_speed_mph();
-  float f_speed_mps();
-  float f_speed_kmph();
   
 }; // class Gps header definition
 

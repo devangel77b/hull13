@@ -15,8 +15,10 @@
   connection _gps to the Copernicus II.
  */
 void Gps::_rx_callback(void){
-  // have to actually read to clear the interrupt 
-  Gps::newdata = Gps::_parser.encode(Gps::_gps.getc()); 
+  // have to actually read to clear the interrupt
+  char c = Gps::_gps.getc();
+  //printf("%c",c);
+  Gps::parser.encode(c); //Gps::_gps.getc());
 }
     
 
@@ -67,54 +69,5 @@ Gps::~Gps(){
 
 
 
-void Gps::get_position(long *latitude, long *longitude, unsigned long *fix_age){
-  //Gps::_parser.get_position(latitude, longitude, fix_age); 
-}
-
-void Gps::get_datetime(unsigned long *date, unsigned long *time, unsigned long *fix_age){
-  //Gps::_parser.get_datetime(date, time, fix_age);
-}
-
-unsigned long Gps::course(){
-  //return Gps::_parser.course();
-}
-
-unsigned long Gps::speed(){
-  //return Gps::_parser.speed();
-}
-
-unsigned short Gps::satellites(){
-  //return Gps::_parser.satellites();
-}
-  
-void Gps::f_get_position(float * latitude,
-			 float * longitude,
-			 unsigned long * fix_age){
-  //Gps::_parser.f_get_position(latitude, longitude, fix_age);
-}
-
-void Gps::crack_datetime(int *year, byte *month, byte *day, 
-			 byte *hour, byte *minute, byte *second,
-			 byte *hundredths, unsigned long *fix_age){
-  //Gps::_parser.crack_datetime(year, month, day,
-  //			      hour, minute, second,
-  //			      hundredths, fix_age);
-}
-
-float Gps::f_altitude(){
-  //return Gps::_parser.f_altitude();
-}
-
-float Gps::f_course(){
-  //return Gps::_parser.f_course();
-}
-
-float Gps::f_speed_knots(){
-  //return Gps::_parser.f_speed_knots();
-}
-
-float Gps::f_speed_mps(){
-  //return Gps::_parser.f_speed_mps();
-}
 
 
