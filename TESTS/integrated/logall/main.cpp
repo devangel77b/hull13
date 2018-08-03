@@ -149,9 +149,9 @@ int main(){
 
     // course
     if (gps.parser.course.isValid()){
-      pc.printf("%05.1f", gps.parser.course.deg());
-      logger.printf("%05.1f", gps.parser.course.deg());
-      telem.printf("%05.1f", gps.parser.course.deg());
+      pc.printf("%05.1f, ", gps.parser.course.deg());
+      logger.printf("%05.1f, ", gps.parser.course.deg());
+      telem.printf("%05.1f, ", gps.parser.course.deg());
     }
     else {
       pc.printf("NA, ");
@@ -162,8 +162,8 @@ int main(){
     // speed
     if (gps.parser.speed.isValid()){
       pc.printf("%04.1, ",gps.parser.speed.knots());
-      logger.printf("%04.1",gps.parser.speed.knots());
-      telem.printf("%04.1f",gps.parser.speed.knots());
+      logger.printf("%04.1, ",gps.parser.speed.knots());
+      telem.printf("%04.1f, ",gps.parser.speed.knots());
     }
     else {
       pc.printf("NA, ");
